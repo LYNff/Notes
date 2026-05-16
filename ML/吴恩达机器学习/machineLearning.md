@@ -25,6 +25,7 @@
     > np.arange(2, 9, 2) --> array([2, 4, 6, 8])
     > // first number, last number, step size
     > np.linspace(0, 10, num=5) --> array([0. , 2.5, 5. , 7.5, 10. ])
+    > np.eye(2) --> array(\[[1., 0.][0., 1.]])
 
 4. Specifying data type
     默认的数据类型是 floating point(np.float64)， 使用 dtype 来选择特定的数据类型。
@@ -128,8 +129,8 @@
 12. Broadcasting 广播机制
     - 准则一：右对齐原则：把两个数组的shape元祖拿出来比较，靠右对齐
     - 准则二：兼容性检查（满足两个条件之一）：
-    1. 两个维度的长度完全相等
-    2. 两个维度中，有且只有一个的长度是1
+        1. 两个维度的长度完全相等
+        2. 两个维度中，有且只有一个的长度是1
 
 13. Other array operations
     ```python
@@ -155,6 +156,11 @@
     **函数 np.tile(A, reps)**
     > A: 想要重复的基础数组
     > reps: 一个数字或者元组，用来指定在各个维度上重复的次数，如果是数字，表示在最后一个维度上重复对应的次数，如果是元组，比如（2, 3）则是在行方向重复2次，在列方向重复3次
+
+    **函数 np.linalg.norm(x, ord=None, axis=None)**
+    > 计算向量或矩阵的范数(norm)
+    > x 为要计算的数组
+    > ord 为范数的类型 默认为L2范数
 
 14. Generate random numbers
     ```python 
