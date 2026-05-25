@@ -1,9 +1,4 @@
-# 吴恩达机器学习笔记
-
-## Numpy basics
-1. Intuition in Numpy: 在 Numpy 中，维度是从外向内嵌套的，最右边的索引，代表着内存中最紧邻的元素（一行中的各个列），所以需要建立“列在最后，行在倒数第二”的直觉。
-
-2. 一些常用的函数
+1. 一些常用的函数
     ``` python
     a = np.array([1, 2, 3, 4],
                 [5, 6, 7, 8],
@@ -16,7 +11,7 @@
     > a.size == math.prod(a.shape) --> True
     > a.dtype --> dtype('int64')
 
-3. Create a basic array
+2. Create a basic array
     > np.zeros(2) --> array([0. , 0. ])
     > np.ones(2) --> array([1. , 1. ])
     > np.empty(2) --> array([3.14, 42. ]) 
@@ -27,11 +22,11 @@
     > np.linspace(0, 10, num=5) --> array([0. , 2.5, 5. , 7.5, 10. ])
     > np.eye(2) --> array(\[[1., 0.][0., 1.]])
 
-4. Specifying data type
+3. Specifying data type
     默认的数据类型是 floating point(np.float64)， 使用 dtype 来选择特定的数据类型。
     > np.ones(2, dtype=np.int64) --> array([1, 1])
 
-5. Adding, removing, and sorting
+4. Adding, removing, and sorting
     **在所有的axis参数中，axis表示沿着哪个方向移动**
     ```pyton
     arr = np.array([2, 1, 5, 3, 7, 4, 6, 8])
@@ -51,20 +46,20 @@
     ```
     > np.concatenate((a, b)) --> array([1, 2, 3, 4, 5, 6, 7, 8])
 
-6. Array-like
+5. Array-like
    Numpy 能把 array-like 对象自动转换为数组
 
     - python 原生序列（比如列表、元祖，设置是他们的嵌套[[1, 2], (3, 4)]
     - 标量数字：单独传一个5进去，会被当成零维数组。
     - 实现了 __ $array()$ __ 魔法方法的对象
 
-7. Reshape an array
+6. Reshape an array
    ```python
    a = np.arange(6)
    ```
    > a.reshape(3, 2) --> array(\[[0, 1], [2, 3], [4, 5]])
 
-8. Convert a 1D array in 2D array
+7. Convert a 1D array in 2D array
    ```python
    a = np.array([1, 2, 3, 4, 5, 6])
    row_vector = a[np.newaxis, :]
@@ -78,7 +73,7 @@
    > b.shape --> (6, 1)
    > c.shape --> (1, 6)
 
-9. Indexing
+8. Indexing
     ```python
     a = np.array([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]])
     five_up = (a > 2) & (a < 11)
@@ -87,7 +82,7 @@
     > print(c) --> [3 4 5 6 7 8 9 10]
     > print(b) --> (array[0, 0, 0, 0], array[0, 1, 2, 3])
 
-10. Create an array from existing data
+9. Create an array from existing data
     ```python
     a = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     arr1 = a[3:8]
@@ -102,7 +97,7 @@
     > np.hstack((a1, a2)) --> array(\[[1, 1, 3, 3], [2, 2, 4, 4]])
     > np.hsplit(x, 3) // 返回一个列表，按照行拆分的三个数组
 
-11. Basic array operations
+10. Basic array operations
     ```python
     a = np.array([1, 2, 3, 4])
     b = np.array([[1, 1], [2, 2]])
@@ -126,13 +121,13 @@
     > A @ B --> array(\[[5, 4], [3, 4]]) // 相当于 A.dot(B)，矩阵乘法 
     > c.cumsum(axis=1) // 按照列方向的累计和
 
-12. Broadcasting 广播机制
+11. Broadcasting 广播机制
     - 准则一：右对齐原则：把两个数组的shape元祖拿出来比较，靠右对齐
     - 准则二：兼容性检查（满足两个条件之一）：
         1. 两个维度的长度完全相等
         2. 两个维度中，有且只有一个的长度是1
 
-13. Other array operations
+12. Other array operations
     ```python
     a = np.array([[0.45053314, 0.17296777, 0.34376245, 0.5510652],
               [0.54627315, 0.05093587, 0.40067661, 0.55645993],
@@ -162,7 +157,7 @@
     > x 为要计算的数组
     > ord 为范数的类型 默认为L2范数
 
-14. Generate random numbers
+13. Generate random numbers
     ```python 
     rng = np.random.default_rng()
     ```
@@ -183,7 +178,7 @@
     ```
     这三种方法均等效
 
-15. Get unique items and counts
+14. Get unique items and counts
     ```python
     a = np.array([11, 11, 12, 13, 14, 15, 15, 17, 12, 13, 11, 14, 18, 19, 20])
     unique_values, indices_list = np.unique(a, return_index=True)
@@ -197,7 +192,7 @@
     > np.unique(a_2d) --> array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
     > // 如果没有传递axis,2D数组将会被展平
 
-16. Transpose and reshape a matrix 转置和重塑矩阵
+15. Transpose and reshape a matrix 转置和重塑矩阵
     ```python
     arr = np.arange(6).reshape((2, 3))
     ```
@@ -205,7 +200,7 @@
     > arr.transpose() --> array(\[[0, 3], [1, 4], [2, 5]])
     > arr.T --> array(\[[0, 3], [1, 4], [2, 5]])
 
-17. Reverse an array
+16. Reverse an array
     ```python
     arr = np.array([1, 2, 3, 4, 5, 6, 7, 8])
     arr_2d = np.array([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]])
@@ -215,7 +210,7 @@
     > np.flip(arr_2d, axis=0) --> array(\[[9, 10, 11, 12], [5, 6, 7, 8], [1, 2, 3, 4]])
     > np.flip(arr_2d, axis=0) --> array(\[[4, 3, 2, 1], [8, 7, 6, 5], [12, 11, 10, 9]])
 
-18. Reshape and flatten multidimensional arrays 重塑和展平多维数组
+17. Reshape and flatten multidimensional arrays 重塑和展平多维数组
     ```python 
     x = np.array([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]])
     ```
@@ -229,7 +224,7 @@
     > x --> array(\[[98, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]])
     > a2 --> array([98, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
 
-19. Save and load Numpy objects
+18. Save and load Numpy objects
     ```python
     a = np.array([1, 2, 3, 4, 5, 6])
     np.save('filename', a)
@@ -240,7 +235,7 @@
     ```
     > np.loadtxt('new_file.csv') --> array([1., 2., 3., 4., 5., 6., 7., 8.])
 
-20. Import and export a CSV
+19. Import and export a CSV
     使用 Pandas
     ```python
     import pandas as pd
@@ -249,7 +244,7 @@
     ```
     ![alt text](image.png)
 
-21. 一些运算模式：
+20. 一些运算模式：
 
     - Numpy在处理np.dot(矩阵，一维向量)时，会进行自动升维运算和自动降维返回，运算的时候发现后面是一个(n,)的一位数组，为了满足矩阵乘法，会在内部把它临时当作(n, 1)的列向量参与运算；算完之后将得到的(m, 1)的二维列向量展评成为(m,)的一维数组
 
