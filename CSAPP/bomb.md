@@ -34,7 +34,6 @@
 mov    -0x4(%rbx),%eax
 add    %eax,%eax
 cmp    %eax,(%rbx)
-
 ```
 最重要需要理解的就是理解数组的构建和循环过程，借助 gdb 我们可以很轻松的知道我们需要输入的元素的个数 ，阅读 `read_six_numbers` 通过 `x/s $rsi` 去只读段寻找对应的输入格式字符串
 ## Phase 3
