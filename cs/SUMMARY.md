@@ -1,17 +1,17 @@
 # Summary
 
 * CSAPP
-  * [arch](CSAPP/arch.md)
-  * [attack](CSAPP/attack.md)
-  * [bomb](CSAPP/bomb.md)
-  * [databits](CSAPP/databits.md)
+  * [arch](cs/CSAPP/arch.md)
+  * [attack](cs/CSAPP/attack.md)
+  * [bomb](cs/CSAPP/bomb.md)
+  * [databits](cs/CSAPP/databits.md)
 
 * Leetcode
-  * [hot100](Leetcode/hot100.md)
+  * [hot100](cs/Leetcode/hot100.md)
 
 * ML
-  * [吴恩达机器学习](ML/吴恩达机器学习.md)
-  * [CS231n](ML/CS231n.md)
+  * [吴恩达机器学习](cs/ML/吴恩达机器学习.md)
+  * [CS231n](cs/ML/CS231n.md)
 
 * NJU
-  * [ICSPA](NJU/ICSPA.md)
+  * [ICSPA](cs/NJU/ICSPA.md)
