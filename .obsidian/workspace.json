@@ -29,7 +29,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "cs/SUMMARY.md",
+                "file": "SUMMARY.md",
                 "mode": "source",
                 "source": false
               },
@@ -267,11 +267,11 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "a8d16b5cf1d20c94",
+  "active": "cbc4e6ee5a2c926c",
   "lastOpenFiles": [
-    "cs/CSAPP/arch.md",
-    "cs/SUMMARY.md",
     "cs/ML/吴恩达机器学习.md",
+    "SUMMARY.md",
+    "cs/CSAPP/arch.md",
     "cs/ML/CS231n.md",
     "cs/cs.md",
     "cs/ML/未命名.md",
