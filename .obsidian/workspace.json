@@ -29,7 +29,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "SUMMARY.md",
+                "file": "cs/SUMMARY.md",
                 "mode": "source",
                 "source": false
               },
@@ -269,8 +269,9 @@
   },
   "active": "cbc4e6ee5a2c926c",
   "lastOpenFiles": [
+    "cs/Leetcode/hot100.md",
+    "cs/SUMMARY.md",
     "cs/ML/吴恩达机器学习.md",
-    "SUMMARY.md",
     "cs/CSAPP/arch.md",
     "cs/ML/CS231n.md",
     "cs/cs.md",
@@ -304,7 +305,6 @@
     "2026-06-15.md",
     "cs/CSAPP/CSAPP.md",
     "Projects/CS Study_tasks/吴恩达机器学习.md",
-    "Projects/CS Study_tasks/Archive/吴恩达机器学习.md",
     "Attachments/Pasted image 20260606173733.png",
     "Attachments/Pasted image 20260606172718.png",
     "Attachments/Pasted image 20260603193405.png",
