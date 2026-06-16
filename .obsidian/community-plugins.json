@@ -14,5 +14,6 @@
   "obsidian-checklist-plugin",
   "templater-obsidian",
   "periodic-notes",
-  "heatmap-tracker"
+  "heatmap-tracker",
+  "waypoint"
 ]
