@@ -1,0 +1,181 @@
+/*------------------------------------------------------------------------------
+                     Daily Note Themes by CyanVoxel v1.0.5
+
+These are a set of 7 main CSS classes that can be used to apply individual color
+schemes to daily notes for each day of the week.
+To customize the colors for each day, just swamp out the colors values under
+the main "day of the week" classes.
+
+NOTE: By default, this snippet relies on the "Bai Jamjuree" or
+"JetBrainsMono Nerd Font Mono" fonts. If you don't wish to use these, then just
+change or remove those font-family lines from this snippet.
+                
+------------------------------------------------------------------------------*/
+:root {
+  --highlight: #444444;
+  --primary: #999999;
+  --dark: #f0f0f0;
+}
+
+.daily {
+  color: var(--highlight);
+  background-color: var(--dark);
+  --text-normal: var(--highlight);
+  --text-muted: var(--highlight);
+  --text-faint: var(--highlight);
+  --checklist-done-color: var(--primary);
+  --metadata-label-text-color: var(--highlight);
+  --metadata-input-text-color: var(--highlight);
+  --tag-color: #ffffff;
+  --tag-background: var(--primary);
+  --hr-color: var(--primary);
+  --blockquote-border-color: var(--primary);
+  --interactive-accent: var(--primary);
+  --collapse-icon-color-collapsed: var(--primary);
+  --checkbox-color: var(--primary);
+  --checkbox-marker-color: #ffffff;
+  --checkbox-color-hover: var(--primary);
+  --checkbox-border-color: var(--primary);
+  --list-marker-color: var(--primary);
+  --code-background: #e0e0e0;
+  --code-normal: var(--highlight);
+
+  --background-modifier-border-focus: var(--primary);
+  --background-modifier-border: color-mix(in srgb, var(--primary) 40%, transparent);
+  --background-modifier-hover: color-mix(in srgb, var(--primary) 20%, transparent);
+  --pill-cover-hover: color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+.sunday,
+.Sunday {
+  --highlight: #4a1525;
+  --primary: #e8577a;
+  --dark: #fef0f3;
+}
+
+.monday,
+.Monday {
+  --highlight: #4a1815;
+  --primary: #e8685a;
+  --dark: #fef0ee;
+}
+
+.tuesday,
+.Tuesday {
+  --highlight: #0d1b3e;
+  --primary: #4b8ff0;
+  --dark: #eef4fd;
+}
+
+.wednesday,
+.Wednesday {
+  --highlight: #3d2a0a;
+  --primary: #c89820;
+  --dark: #fef9ee;
+}
+
+.thursday,
+.Thursday {
+  --highlight: #3d1c0a;
+  --primary: #e87830;
+  --dark: #fef4ee;
+}
+
+.friday,
+.Friday {
+  --highlight: #1a3012;
+  --primary: #6db84d;
+  --dark: #f2faf0;
+}
+
+.saturday,
+.Saturday {
+  --highlight: #3d0d18;
+  --primary: #d9446a;
+  --dark: #fef0f3;
+}
+
+.daily :is(h1, .HyperMD-header.HyperMD-header-1) {
+  color: var(--primary);
+  text-align: center;
+  font-size: 60px;
+  font-family: "Bai Jamjuree", "JetBrainsMono Nerd Font Mono", "JetBrains Mono";
+  padding: 0 !important;
+}
+
+.daily :is(h2, .HyperMD-header.HyperMD-header-2) {
+  color: var(--highlight);
+  text-align: center;
+  font-size: 30px;
+  font-family: "Bai Jamjuree", "JetBrainsMono Nerd Font Mono", "JetBrains Mono";
+  font-style: italic;
+  padding: 0 !important;
+}
+
+.daily :is(h3, .HyperMD-header.HyperMD-header-3) {
+  color: var(--primary);
+  text-align: center;
+
+  font-size: 32px;
+  font-family: "Bai Jamjuree", "JetBrainsMono Nerd Font Mono", "JetBrains Mono";
+  padding-top: 0;
+}
+
+.daily :is(h4, .HyperMD-header.HyperMD-header-4) {
+  background-color: var(--primary);
+  color: #ffffff;
+  /* border-color: var(--primary); */
+  /* font-family: "JetBrainsMono Nerd Font Mono", "JetBrains Mono", monospace; */
+  font-weight: 900;
+  margin-bottom: 0;
+  padding-top: 0;
+  font-size: 20px;
+  width: fit-content;
+  padding-left: 6px;
+  padding-right: 6px;
+  /* border: solid; */
+  border-radius: 8px;
+  /* border-width: 2px; */
+  word-wrap: normal;
+}
+
+.daily :is(h5, .HyperMD-header.HyperMD-header-5) {
+  color: var(--primary);
+  text-align: center;
+  margin-bottom: 0;
+  padding-top: 0;
+}
+
+.daily p {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.daily :is(a:link, .cm-hmd-internal-link) {
+  color: var(--primary);
+}
+
+.daily :is(a:hover, .cm-hmd-internal-link:hover) {
+  color: var(--highlight);
+}
+
+.daily hr {
+  margin-top: 20px !important;
+  margin-bottom: 20px !important;
+}
+
+.daily img {
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+:is(.sunday, .Sunday,
+  .monday, .Monday,
+  .tuesday, .Tuesday,
+  .wednesday, .Wednesday,
+  .thursday, .Thursday,
+  .friday, .Friday,
+  .saturday, .Saturday) svg {
+  color: color-mix(in srgb, var(--highlight) 60%, transparent);
+}

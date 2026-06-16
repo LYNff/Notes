@@ -1,3 +1,7 @@
+---
+type: project
+status: Done
+---
 1. 一些常用的函数
     ``` python
     a = np.array([1, 2, 3, 4],
