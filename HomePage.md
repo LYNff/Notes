@@ -2,6 +2,7 @@
 cssclasses:
   - home-page
   - hide-properties
+obsidianUIMode: preview
 ---
 ## 🗓️ 任务看板 
 

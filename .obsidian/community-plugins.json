@@ -15,5 +15,7 @@
   "templater-obsidian",
   "periodic-notes",
   "heatmap-tracker",
-  "waypoint"
+  "waypoint",
+  "obsidian-view-mode-by-frontmatter",
+  "obsidian-memos"
 ]

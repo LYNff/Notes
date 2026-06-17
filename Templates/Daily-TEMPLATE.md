@@ -28,13 +28,14 @@ cssclasses:
 
 
 #### Habits
-
+- 🔠 \[english:: ]
+- 🪥 \[teeth::]
 
 #### 🥦Health
 - 🥬\[vegetable::]
 
 #### 💪Body
-
+- 🏃‍♀‍➡\[workout::]
 
 #### End-of-Day Checklist
 
