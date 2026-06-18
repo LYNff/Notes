@@ -24,7 +24,7 @@
             }
           },
           {
-            "id": "cb337a44e9a8c4b0",
+            "id": "52350b9107c06b62",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -37,8 +37,7 @@
               "title": "CSAPP"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -50,7 +49,7 @@
       {
         "id": "8691dbff7eef26c5",
         "type": "tabs",
-        "dimension": 55.16393442622951,
+        "dimension": 59.01639344262295,
         "children": [
           {
             "id": "cbc4e6ee5a2c926c",
@@ -95,18 +94,16 @@
         ]
       },
       {
-        "id": "1497db620a44bca1",
+        "id": "cf98d15a10671929",
         "type": "tabs",
-        "dimension": 44.83606557377049,
+        "dimension": 40.98360655737705,
         "children": [
           {
-            "id": "5ab1cc53bd4b52b6",
+            "id": "d096b0a75ae252d7",
             "type": "leaf",
-            "pinned": true,
             "state": {
               "type": "thino_view",
               "state": {},
-              "pinned": true,
               "icon": "Memos",
               "title": "Thino"
             }
@@ -115,7 +112,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 348.5
+    "width": 348.5,
+    "collapsed": true
   },
   "right": {
     "id": "b3a69d6cb928ca0f",
@@ -197,16 +195,6 @@
               "icon": "calendar-with-checkmark",
               "title": "Calendar"
             }
-          },
-          {
-            "id": "507ce04dd7160a76",
-            "type": "leaf",
-            "state": {
-              "type": "git-view",
-              "state": {},
-              "icon": "git-pull-request",
-              "title": "Source Control"
-            }
           }
         ],
         "currentTab": 4
@@ -252,9 +240,19 @@
               "icon": "checkmark",
               "title": "Todo List"
             }
+          },
+          {
+            "id": "1b57ea64ea00a347",
+            "type": "leaf",
+            "state": {
+              "type": "tasks_timeline_view",
+              "state": {},
+              "icon": "calendar-clock",
+              "title": "Tasks Timeline"
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -269,33 +267,43 @@
       "graph:查看关系图谱": false,
       "command-palette:打开命令面板": false,
       "bases:新建数据库": false,
-      "obsidian-full-calendar:Open Full Calendar": false,
       "obsidian-excalidraw-plugin:新建绘图文件": false,
-      "obsidian-git:Open Git source control": false,
       "realclaudian:Open Claudian": false,
       "darlal-switcher-plus:Open in Headings Mode": false,
       "darlal-switcher-plus:Open Symbols for the active editor": false,
       "homepage:Open homepage": false,
       "templater-obsidian:Templater": false,
-      "periodic-notes:Open today": false,
       "obsidian-memos:Thino": false,
-      "obsidian-memos:Thino Super": false
+      "obsidian-memos:Thino Super": false,
+      "fast-note-sync:FNS菜单": false,
+      "periodic-notes:Open today": false
     }
   },
-  "active": "cb337a44e9a8c4b0",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "HomePage.md",
     "cs/CSAPP/CSAPP.md",
-    "Calendar/Schedule/2026-06-21 毛概复习背诵.md",
-    "Calendar/Schedule",
-    "Calendar/Schedule.md",
+    "HomePage.md",
     "cs/NJU/ICSPA.md",
+    "Calendar/Schedule.md",
+    "Calendar/Journal/Daily/2026-06-18.md",
+    "HomePage.md.tmp.14139.9ae55a9ec4c5",
+    "HomePage.md.tmp.14139.acc79abb45de",
+    "HomePage.md.tmp.14139.14ab8b9be953",
+    "HomePage.md.tmp.14139.eff48313c7db",
+    "HomePage.md.tmp.14139.6a57cf56d2e0",
+    "VIM 跳转流/像Vim一样跳转.md",
     "Calendar/Journal/Daily/2026-06-17.md",
+    "Habits Tracker.md",
+    "HomePage.md.tmp.181146.340d9bcc611f",
+    "HomePage.md.tmp.181146.82abfc5c526a",
+    "HomePage.md.tmp.181146.35183deca7a8",
+    "HomePage.md.tmp.181146.8a8c71bd9fb6",
+    "HomePage.md.tmp.181146.92cc10018c64",
+    "Calendar/Schedule/2026-06-21 毛概复习背诵.md",
     "Attachments/image.png",
     "Attachments/头像.jpg",
     "Calendar/Journal/Daily/2026-06-16.md",
     "Templates/Daily-TEMPLATE.md",
-    "Habits Tracker.md",
     "Drawing 2026-06-16 22.44.42.excalidraw.md",
     "cs/SUMMARY.md",
     "cs/Leetcode/hot100.md",
@@ -305,23 +313,11 @@
     "cs/cs.md",
     "cs/ML/未命名.md",
     "吴恩达机器学习.md",
-    "cs",
     "Calendar/Journal/Daily/2026-06-07.md",
-    "Templates/Daily-TEMPLATE.md.tmp.10948.5e7168c89939",
     "Calendar/Journal/Daily/2026-06-15.md",
-    "Bases/On This Day.base",
-    "Bases/Calendar.base",
     "Calendar/To do list.md",
     "2026.md",
-    "On This Day.base",
-    "On This Day_1.base",
-    "Calendar.base",
-    "Calendar_1.base",
     "Daily-TEMPLATE.md",
-    "枸杞加水的日记系统/css文件/General Tweaks.css",
-    "枸杞加水的日记系统/Habits Tracker.md",
-    "枸杞加水的日记系统/Daily-TEMPLATE.md",
-    "Calendar/Journal/未命名.md",
     "Attachments/Pasted image 20260606173733.png",
     "Attachments/Pasted image 20260606172718.png",
     "Attachments/Pasted image 20260603193405.png",

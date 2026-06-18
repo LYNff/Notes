@@ -1,5 +1,4 @@
 [
-  "obsidian-git",
   "obsidian-excalidraw-plugin",
   "realclaudian",
   "obsidian-style-settings",
@@ -17,5 +16,8 @@
   "heatmap-tracker",
   "waypoint",
   "obsidian-view-mode-by-frontmatter",
-  "obsidian-memos"
+  "obsidian-memos",
+  "fast-note-sync",
+  "tasks-calendar-wrapper",
+  "contribution-graph"
 ]

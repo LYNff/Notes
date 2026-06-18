@@ -1,3 +1,8 @@
+---
+type: project
+status: plan
+---
+
 # NJUPA
 
 ## Makefile 基础知识

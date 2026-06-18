@@ -4,7 +4,7 @@
       "id": "5edce9a4-c552-4b00-8b2b-fd84a32d1e43",
       "name": "quick todo",
       "type": "Capture",
-      "command": false,
+      "command": true,
       "appendLink": false,
       "captureTo": "To do list.md",
       "captureToActiveFile": false,
@@ -18,6 +18,53 @@
       "format": {
         "enabled": true,
         "format": "- [ ] {{value}}"
+      },
+      "insertAfter": {
+        "enabled": false,
+        "after": "",
+        "insertAtEnd": false,
+        "considerSubsections": false,
+        "createIfNotFound": false,
+        "createIfNotFoundLocation": "top",
+        "inline": false,
+        "replaceExisting": false,
+        "blankLineAfterMatchMode": "auto"
+      },
+      "newLineCapture": {
+        "enabled": false,
+        "direction": "below"
+      },
+      "prepend": true,
+      "task": false,
+      "openFile": false,
+      "fileOpening": {
+        "location": "tab",
+        "direction": "vertical",
+        "mode": "default",
+        "focus": true
+      },
+      "templater": {
+        "afterCapture": "none"
+      }
+    },
+    {
+      "id": "1ee74327-f440-4810-8064-10c9619fba42",
+      "name": "quick schedule",
+      "type": "Capture",
+      "command": true,
+      "appendLink": false,
+      "captureTo": "Calendar/Schedule.md",
+      "captureToActiveFile": false,
+      "captureToCanvasNodeId": "",
+      "activeFileWritePosition": "cursor",
+      "createFileIfItDoesntExist": {
+        "enabled": false,
+        "createWithTemplate": false,
+        "template": ""
+      },
+      "format": {
+        "enabled": true,
+        "format": "{{VALUE:内容1}} | {{VALUE:内容2}}"
       },
       "insertAfter": {
         "enabled": false,

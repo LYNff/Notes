@@ -1,0 +1,475 @@
+/* ============================================
+   Vertical Timeline — for Schedule.md
+   ============================================ */
+
+/* === Timeline Container === */
+.timeline-container {
+  --tl-line-color: var(--interactive-accent, #4b63fb);
+  --tl-line-width: 3px;
+  --tl-dot-size: 14px;
+  --tl-card-bg: var(--background-primary-alt, #1e1e2e);
+  --tl-card-hover-bg: var(--background-secondary-alt, #2a2a3e);
+  --tl-text: var(--text-normal, #cdd6f4);
+  --tl-muted: var(--text-muted, #6c7086);
+  --tl-month-color: var(--text-accent, #4b63fb);
+  --tl-today-color: #ff6b6b;
+  --tl-done-color: #a6e3a1;
+
+  position: relative;
+  padding: 16px 0 24px 0;
+  margin: 8px 0;
+}
+
+/* === The Vertical Line === */
+.timeline-container::before {
+  content: "";
+  position: absolute;
+  left: 22px;
+  top: 0;
+  bottom: 0;
+  width: var(--tl-line-width);
+  border-radius: 2px;
+  background: linear-gradient(
+    180deg,
+    var(--tl-line-color) 0%,
+    var(--tl-line-color) 60%,
+    color-mix(in srgb, var(--tl-line-color) 30%, transparent) 100%
+  );
+  opacity: 0.5;
+}
+
+/* === Month Separator === */
+.timeline-month {
+  position: relative;
+  margin: 20px 0 16px 52px;
+  padding: 0;
+  font-size: 0.85em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tl-month-color);
+  opacity: 0.75;
+}
+
+.timeline-month::before {
+  content: "";
+  position: absolute;
+  left: -34px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--tl-month-color);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--tl-month-color) 25%, transparent);
+  z-index: 1;
+}
+
+.timeline-month::after {
+  content: "";
+  position: absolute;
+  left: -36px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid var(--tl-month-color);
+  opacity: 0.5;
+  animation: tl-month-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes tl-month-pulse {
+  0%, 100% { transform: translateY(-50%) scale(1); opacity: 0.5; }
+  50%      { transform: translateY(-50%) scale(1.8); opacity: 0; }
+}
+
+/* === Single Event Row === */
+.timeline-event {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  margin: 0 0 2px 0;
+  padding: 0;
+  transition: transform 0.2s ease;
+}
+
+.timeline-event:hover {
+  transform: translateX(4px);
+}
+
+/* === The Dot on the Line === */
+.timeline-dot {
+  position: absolute;
+  left: 18px;
+  top: 18px;
+  width: var(--tl-dot-size);
+  height: var(--tl-dot-size);
+  border-radius: 50%;
+  background: var(--tl-line-color);
+  border: 3px solid var(--background-primary, #1e1e2e);
+  z-index: 2;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.timeline-event:hover .timeline-dot {
+  transform: scale(1.3);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--tl-line-color) 60%, transparent);
+}
+
+/* Dot color variants */
+.timeline-dot.today {
+  background: var(--tl-today-color);
+  animation: tl-dot-pulse 2s ease-in-out infinite;
+}
+
+.timeline-dot.upcoming {
+  background: var(--tl-line-color);
+}
+
+.timeline-dot.past {
+  background: var(--tl-done-color);
+}
+
+@keyframes tl-dot-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--tl-today-color) 70%, transparent); }
+  50%      { box-shadow: 0 0 0 10px color-mix(in srgb, var(--tl-today-color) 0%, transparent); }
+}
+
+/* === Event Card === */
+.timeline-card {
+  margin-left: 52px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: var(--tl-card-bg);
+  border: 1px solid color-mix(in srgb, var(--tl-line-color) 15%, transparent);
+  flex: 1;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.timeline-event:hover .timeline-card {
+  background: var(--tl-card-hover-bg);
+  border-color: color-mix(in srgb, var(--tl-line-color) 35%, transparent);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Subtle left accent bar on card */
+.timeline-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 20%;
+  bottom: 20%;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--tl-line-color);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.timeline-event:hover .timeline-card::before {
+  opacity: 0.6;
+}
+
+/* === Date Badge === */
+.timeline-date {
+  display: inline-block;
+  font-size: 0.78em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--tl-line-color);
+  background: color-mix(in srgb, var(--tl-line-color) 12%, transparent);
+  padding: 2px 10px;
+  border-radius: 20px;
+  margin-bottom: 4px;
+}
+
+.timeline-date.today {
+  color: var(--tl-today-color);
+  background: color-mix(in srgb, var(--tl-today-color) 15%, transparent);
+}
+
+/* === Event Title === */
+.timeline-title {
+  display: block;
+  font-size: 0.95em;
+  font-weight: 500;
+  color: var(--tl-text);
+  line-height: 1.5;
+}
+
+/* === Countdown Badge === */
+.timeline-countdown {
+  display: inline-block;
+  font-size: 0.72em;
+  font-weight: 600;
+  color: var(--tl-muted);
+  background: color-mix(in srgb, var(--tl-muted) 10%, transparent);
+  padding: 1px 8px;
+  border-radius: 10px;
+  margin-left: 6px;
+}
+
+.timeline-countdown.urgent {
+  color: var(--tl-today-color);
+  background: color-mix(in srgb, var(--tl-today-color) 12%, transparent);
+  animation: tl-urgent-flicker 3s ease-in-out infinite;
+}
+
+@keyframes tl-urgent-flicker {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.6; }
+}
+
+/* === No Events Placeholder === */
+.timeline-empty {
+  text-align: center;
+  padding: 32px 16px;
+  color: var(--tl-muted);
+  font-style: italic;
+  opacity: 0.6;
+}
+
+/* === Weekday Label === */
+.timeline-weekday {
+  font-size: 0.7em;
+  font-weight: 500;
+  color: var(--tl-muted);
+  margin-left: 4px;
+  opacity: 0.7;
+}
+
+/* === Time-of-day Badge === */
+.timeline-time {
+  display: inline-block;
+  font-size: 0.72em;
+  font-weight: 600;
+  padding: 1px 8px;
+  border-radius: 10px;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+.timeline-time.tl-time-morning  { color: #e8960a; background: rgba(232,150,10,0.12); }
+.timeline-time.tl-time-noon     { color: #d97706; background: rgba(217,119,6,0.12); }
+.timeline-time.tl-time-afternoon{ color: #2563eb; background: rgba(37,99,235,0.10); }
+.timeline-time.tl-time-dusk     { color: #c2410c; background: rgba(194,65,12,0.12); }
+.timeline-time.tl-time-night    { color: #7c3aed; background: rgba(124,58,237,0.12); }
+
+/* === Dark / Light mode tweaks === */
+.theme-light .timeline-container {
+  --tl-card-bg: var(--background-primary, #f5f5f5);
+  --tl-card-hover-bg: var(--background-secondary, #e8e8e8);
+}
+
+/* ============================================
+   Compact Sidebar Variant — for HomePage right panel
+   ============================================ */
+
+.timeline-sidebar {
+  --tl-line-color: var(--interactive-accent, #4b63fb);
+  --tl-line-width: 2px;
+  --tl-dot-size: 10px;
+  --tl-card-bg: transparent;
+  --tl-card-hover-bg: var(--background-primary-alt, #1e1e2e);
+  --tl-text: var(--text-normal, #cdd6f4);
+  --tl-muted: var(--text-muted, #6c7086);
+  --tl-month-color: var(--text-accent, #4b63fb);
+  --tl-today-color: #ff6b6b;
+  --tl-done-color: #a6e3a1;
+
+  position: relative;
+  padding: 4px 0 8px 0;
+  margin: 0;
+}
+
+/* Sidebar vertical line — thinner, closer to edge */
+.timeline-sidebar::before {
+  content: "";
+  position: absolute;
+  left: 12px;
+  top: 0;
+  bottom: 0;
+  width: var(--tl-line-width);
+  border-radius: 1px;
+  background: linear-gradient(
+    180deg,
+    var(--tl-line-color) 0%,
+    var(--tl-line-color) 60%,
+    color-mix(in srgb, var(--tl-line-color) 25%, transparent) 100%
+  );
+  opacity: 0.4;
+}
+
+/* Compact month separator */
+.timeline-sidebar .timeline-month {
+  margin: 12px 0 8px 36px;
+  font-size: 0.7em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tl-month-color);
+  opacity: 0.7;
+  position: relative;
+}
+
+.timeline-sidebar .timeline-month::before {
+  content: "";
+  position: absolute;
+  left: -26px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--tl-month-color);
+  z-index: 1;
+}
+
+.timeline-sidebar .timeline-month::after {
+  display: none; /* no pulse ring in sidebar — cleaner */
+}
+
+/* Compact event row */
+.timeline-sidebar .timeline-event {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  margin: 0 0 1px 0;
+  padding: 0;
+  transition: transform 0.15s ease;
+}
+
+.timeline-sidebar .timeline-event:hover {
+  transform: translateX(2px);
+}
+
+/* Compact dot */
+.timeline-sidebar .timeline-dot {
+  position: absolute;
+  left: 10px;
+  top: 13px;
+  width: var(--tl-dot-size);
+  height: var(--tl-dot-size);
+  border-radius: 50%;
+  background: var(--tl-line-color);
+  border: 2px solid var(--background-primary, #1e1e2e);
+  z-index: 2;
+  flex-shrink: 0;
+  transition: all 0.25s ease;
+}
+
+.timeline-sidebar .timeline-dot.today {
+  background: var(--tl-today-color);
+  animation: tl-dot-pulse 2s ease-in-out infinite;
+}
+
+.timeline-sidebar .timeline-dot.upcoming {
+  background: var(--tl-line-color);
+}
+
+.timeline-sidebar .timeline-dot.past {
+  background: var(--tl-done-color);
+}
+
+/* Compact card */
+.timeline-sidebar .timeline-card {
+  margin-left: 34px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid transparent;
+  flex: 1;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.timeline-sidebar .timeline-event:hover .timeline-card {
+  background: var(--tl-card-hover-bg);
+  border-color: color-mix(in srgb, var(--tl-line-color) 20%, transparent);
+}
+
+.timeline-sidebar .timeline-card::before {
+  display: none;
+}
+
+/* Compact date badge */
+.timeline-sidebar .timeline-date {
+  display: inline-block;
+  font-size: 0.7em;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--tl-line-color);
+  background: color-mix(in srgb, var(--tl-line-color) 10%, transparent);
+  padding: 1px 7px;
+  border-radius: 12px;
+  margin-bottom: 2px;
+}
+
+.timeline-sidebar .timeline-date.today {
+  color: var(--tl-today-color);
+  background: color-mix(in srgb, var(--tl-today-color) 12%, transparent);
+}
+
+/* Compact event title */
+.timeline-sidebar .timeline-title {
+  display: block;
+  font-size: 0.82em;
+  font-weight: 500;
+  color: var(--tl-text);
+  line-height: 1.4;
+}
+
+/* Compact countdown */
+.timeline-sidebar .timeline-countdown {
+  display: inline-block;
+  font-size: 0.65em;
+  font-weight: 600;
+  color: var(--tl-muted);
+  background: color-mix(in srgb, var(--tl-muted) 8%, transparent);
+  padding: 0px 6px;
+  border-radius: 8px;
+  margin-left: 4px;
+}
+
+.timeline-sidebar .timeline-countdown.urgent {
+  color: var(--tl-today-color);
+  background: color-mix(in srgb, var(--tl-today-color) 10%, transparent);
+}
+
+/* Compact weekday — hide in sidebar to save space */
+.timeline-sidebar .timeline-weekday {
+  display: none;
+}
+
+/* Compact time badge */
+.timeline-sidebar .timeline-time {
+  font-size: 0.6em;
+  padding: 0px 6px;
+  border-radius: 8px;
+  margin-left: 3px;
+}
+
+/* Sidebar empty state */
+.timeline-sidebar .timeline-empty {
+  text-align: center;
+  padding: 20px 12px;
+  font-size: 0.8em;
+  color: var(--tl-muted);
+  font-style: italic;
+  opacity: 0.5;
+}
+
+/* Sidebar dark/light */
+.theme-light .timeline-sidebar {
+  --tl-card-hover-bg: var(--background-secondary, #e8e8e8);
+}
+
+/* === Print / Reading mode === */
+@media print {
+  .timeline-container::before { opacity: 0.3; }
+  .timeline-event:hover { transform: none; }
+  .timeline-sidebar::before { opacity: 0.2; }
+}

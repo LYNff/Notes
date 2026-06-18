@@ -4,6 +4,228 @@ cssclasses:
   - hide-properties
 obsidianUIMode: preview
 ---
+
+```dataviewjs
+// ============================================================
+//  Timeline Sidebar — reads Calendar/Schedule.md
+//  Smart date parsing:
+//    "24 | event"          → current month + day
+//    "7-12 | event"        → month + day, current year
+//    "2026-06-18 | event"  → full date as-is
+//    "下午 | event"        → today + time-of-day
+//    "明天上午 | event"    → tomorrow morning
+//    "24 下午 | event"     → day + time-of-day
+// ============================================================
+
+const content = await dv.io.load("Calendar/Schedule.md");
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+const curYear = today.getFullYear();
+const curMonth = today.getMonth();
+const WEEKDAYS = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+const MONTHS = ["一月", "二月", "三月", "四月", "五月", "六月",
+                "七月", "八月", "九月", "十月", "十一月", "十二月"];
+
+function parseDate(raw) {
+    raw = raw.trim();
+    let m;
+
+    // 1. Full date: YYYY-MM-DD
+    m = raw.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+    if (m) return { date: new Date(+m[1], +m[2] - 1, +m[3]), time: null };
+
+    // 2. Month-Day with optional time: M-D [上午/下午/...]
+    m = raw.match(/^(\d{1,2})-(\d{1,2})\s*(上午|中午|下午|傍晚|晚上)?$/);
+    if (m) return { date: new Date(curYear, +m[1] - 1, +m[2]), time: m[3] || null };
+
+    // 3. Day-only with optional time: D [上午/下午/...]
+    m = raw.match(/^(\d{1,2})\s*(上午|中午|下午|傍晚|晚上)?$/);
+    if (m) return { date: new Date(curYear, curMonth, +m[1]), time: m[2] || null };
+
+    // 4. Relative day + optional time: 明天/后天/大后天 [上午/...]
+    const offsets = { '明天': 1, '后天': 2, '大后天': 3 };
+    for (const [kw, off] of Object.entries(offsets)) {
+        m = raw.match(new RegExp(`^${kw}\\s*(上午|中午|下午|傍晚|晚上)?$`));
+        if (m) {
+            const d = new Date(today); d.setDate(d.getDate() + off);
+            return { date: d, time: m[1] || null };
+        }
+    }
+
+    // 5. "今天" + optional time
+    m = raw.match(/^今天\s*(上午|中午|下午|傍晚|晚上)?$/);
+    if (m) return { date: new Date(today), time: m[1] || null };
+
+    // 6. Time-only → today
+    m = raw.match(/^(上午|中午|下午|傍晚|晚上)$/);
+    if (m) return { date: new Date(today), time: m[1] };
+
+    return null;
+}
+
+const TIME_ICONS = { '上午': '🌅', '中午': '☀️', '下午': '🌤️', '傍晚': '🌆', '晚上': '🌙' };
+const TIME_CLASSES = { '上午': 'tl-time-morning', '中午': 'tl-time-noon', '下午': 'tl-time-afternoon', '傍晚': 'tl-time-dusk', '晚上': 'tl-time-night' };
+
+const lineRe = /^\s*(.+?)\s*\|\s*(.+?)\s*$/gm;
+let events = [];
+let match;
+while ((match = lineRe.exec(content)) !== null) {
+    const parsed = parseDate(match[1]);
+    const title = match[2];
+    if (parsed && parsed.date && !isNaN(parsed.date.getTime())) {
+        events.push({ date: parsed.date, time: parsed.time, title });
+    }
+}
+events.sort((a, b) => a.date - b.date);
+
+function fmtDate(d) {
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    return `${d.getFullYear()}-${mm}-${dd}`;
+}
+
+function daysBetween(a, b) {
+    return Math.round((b - a) / 86400000);
+}
+
+// --- Render timeline content ---
+dv.container.classList.add('hp-timeline-sidebar');
+
+const titleEl = dv.el('div', '📅 日程时间轴');
+titleEl.classList.add('hp-sidebar-title');
+
+if (events.length === 0) {
+    const emptyEl = dv.el('div', '');
+    emptyEl.innerHTML = '<div class="timeline-sidebar"><div class="timeline-empty">📭 暂无 upcoming 日程</div></div>';
+} else {
+    let html = `<div class="timeline-sidebar">`;
+    let lastMonth = -1;
+
+    for (const ev of events) {
+        const d = ev.date;
+        const monthIdx = d.getMonth();
+        const diff = daysBetween(today, d);
+        const isToday = diff === 0;
+        const isPast = diff < 0;
+
+        if (monthIdx !== lastMonth) {
+            lastMonth = monthIdx;
+            html += `<div class="timeline-month">${MONTHS[monthIdx]} ${d.getFullYear()}</div>`;
+        }
+
+        let dotClass = "upcoming";
+        if (isToday) dotClass = "today";
+        else if (isPast) dotClass = "past";
+
+        let dateClass = isToday ? " today" : "";
+
+        // Time-of-day badge
+        let timeBadgeHTML = "";
+        if (ev.time) {
+            const icon = TIME_ICONS[ev.time] || '';
+            const cls = TIME_CLASSES[ev.time] || '';
+            timeBadgeHTML = `<span class="timeline-time ${cls}">${icon} ${ev.time}</span>`;
+        }
+
+        let countdownHTML = "";
+        if (isToday) {
+            countdownHTML = `<span class="timeline-countdown urgent">今天</span>`;
+        } else if (diff > 0 && diff <= 7) {
+            countdownHTML = `<span class="timeline-countdown urgent">${diff}天后</span>`;
+        } else if (diff > 7 && diff <= 30) {
+            countdownHTML = `<span class="timeline-countdown">${diff}天后</span>`;
+        }
+
+        html += `
+            <div class="timeline-event">
+                <div class="timeline-dot ${dotClass}"></div>
+                <div class="timeline-card">
+                    <span class="timeline-date${dateClass}">${fmtDate(d)}</span>
+                    ${timeBadgeHTML}
+                    ${countdownHTML}
+                    <span class="timeline-title">${ev.title}</span>
+                </div>
+            </div>`;
+    }
+    html += `</div>`;
+
+    const tlEl = dv.el('div', '');
+    tlEl.innerHTML = html;
+}
+
+// --- Project Summary: render below timeline in the sidebar ---
+const projects = dv.pages().where(p => p.type === "project");
+const doing   = projects.where(p => p.status === "Doing");
+const planned = projects.where(p => p.status === "plan");
+const done    = projects.where(p => p.status === "Done");
+
+if (doing.length + planned.length + done.length > 0) {
+    const projDiv = dv.el('div', '');
+    projDiv.classList.add('hp-projects');
+    let pHtml = '<div class="hp-sidebar-divider"></div>';
+    pHtml += '<div class="hp-sidebar-title" style="margin-top:4px;">📂 项目</div>';
+
+    if (doing.length > 0) {
+        pHtml += '<div class="hp-proj-group"><span class="hp-proj-dot doing"></span>进行中</div>';
+        for (const p of doing) {
+            pHtml += `<a data-href="${p.file.name}" href="${p.file.name}" class="internal-link hp-proj-link">${p.file.name}</a>`;
+        }
+    }
+    if (planned.length > 0) {
+        pHtml += '<div class="hp-proj-group"><span class="hp-proj-dot planned"></span>未开始</div>';
+        for (const p of planned) {
+            pHtml += `<a data-href="${p.file.name}" href="${p.file.name}" class="internal-link hp-proj-link">${p.file.name}</a>`;
+        }
+    }
+    if (done.length > 0) {
+        pHtml += '<div class="hp-proj-group"><span class="hp-proj-dot done"></span>已完成</div>';
+        for (const p of done) {
+            pHtml += `<a data-href="${p.file.name}" href="${p.file.name}" class="internal-link hp-proj-link">${p.file.name}</a>`;
+        }
+    }
+    projDiv.innerHTML = pHtml;
+}
+
+// --- Two-column layout: inject !important CSS + fixed timeline ---
+setTimeout(() => {
+    let tlBlock = dv.container;
+    while (tlBlock && tlBlock.parentElement && !tlBlock.classList.contains('block-language-dataviewjs')) {
+        tlBlock = tlBlock.parentElement;
+    }
+    if (!tlBlock || !tlBlock.parentElement) return;
+    if (tlBlock.dataset.hpDone) return;
+    tlBlock.dataset.hpDone = '1';
+
+    // Inject CSS to shrink content (covers multiple Obsidian internal selectors)
+    const style = document.createElement('style');
+    style.id = 'hp-layout-style';
+    style.textContent = `
+      .home-page .markdown-preview-view,
+      .home-page .markdown-preview-sizer,
+      .home-page .markdown-preview-section {
+        max-width: calc(100% - 360px) !important;
+        margin-left: 0 !important;
+        margin-right: 360px !important;
+      }
+      .home-page .markdown-reading-view {
+        padding-right: 360px !important;
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Pin timeline to viewport right
+    tlBlock.classList.add('hp-timeline-block');
+    tlBlock.style.position = 'fixed';
+    tlBlock.style.top = '68px';
+    tlBlock.style.right = '24px';
+    tlBlock.style.width = '320px';
+    tlBlock.style.maxHeight = 'calc(100vh - 100px)';
+    tlBlock.style.overflowY = 'auto';
+    tlBlock.style.zIndex = '5';
+}, 200);
+```
+
 ## 🗓️ 任务看板 
 
 >[!multi-column]
@@ -74,26 +296,41 @@ obsidianUIMode: preview
 >> ```
 
 ---
-## 🚀 项目全局 
+## 📊 贡献图
+```contributionGraph
+title: Words Contributions
+graphType: default
+dateRangeValue: 365
+dateRangeType: LATEST_DAYS
+startOfWeek: 1
+showCellRuleIndicators: true
+titleStyle:
+  textAlign: center
+  fontSize: 15px
+  fontWeight: normal
+dataSource:
+  type: PAGE
+  value: ""
+  dateField:
+    type: FILE_MTIME
+fillTheScreen: true
+enableMainContainerShadow: false
+cellStyleRules:
+  - id: Ocean_a
+    color: "#8dd1e2"
+    min: 1
+    max: 2
+  - id: Ocean_b
+    color: "#63a1be"
+    min: 2
+    max: 3
+  - id: Ocean_c
+    color: "#376d93"
+    min: 3
+    max: 5
+  - id: Ocean_d
+    color: "#012f60"
+    min: 5
+    max: 9999
 
->[!multi-column]
->> [!macro]  进行中
->> ```dataview
->> LIST 
->> WHERE type = "project" AND status = "Doing"
->> SORT file.mtime DESC
->> ```
-  > 
->> [!todo]  未开始
->> ```dataview
->> LIST 
->> WHERE type = "project" AND status = "plan"
->> SORT file.mtime DESC
->> ```
->
->> [!done]  已完成
->> ```dataview
->> LIST 
->> WHERE type = "project" AND status = "Done"
->> SORT file.mtime DESC
->> ```
+```
