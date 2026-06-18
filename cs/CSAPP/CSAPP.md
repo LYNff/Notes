@@ -75,3 +75,5 @@ CPU 通常包含以下几个部分：运算器(ALU)、控制器(CU)、寄存器�
 [[arch]]
 # 程序优化
 # 内存层次结构(Memory Hierarchy)
+## lab Cache
+[[cache]]

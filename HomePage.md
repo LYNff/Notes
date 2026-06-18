@@ -164,7 +164,7 @@ if (doing.length + planned.length + done.length > 0) {
     const projDiv = dv.el('div', '');
     projDiv.classList.add('hp-projects');
     let pHtml = '<div class="hp-sidebar-divider"></div>';
-    pHtml += '<div class="hp-sidebar-title" style="margin-top:4px;">📂 项目</div>';
+    pHtml += '<a data-href="project" href="project" class="internal-link hp-proj-title-link" style="display:block;text-decoration:none !important;color:inherit;"><div class="hp-sidebar-title" style="margin-top:4px;">📂 阶段项目</div></a>';
 
     function renderProject(p) {
         const name = p.file.name;
@@ -278,7 +278,7 @@ setTimeout(() => {
 >> ```
 
 ---
-## DDL
+## 🦺 DDL
 
 > [!multi-column]
 >

@@ -39,6 +39,15 @@
   text-align: center;
 }
 
+.home-page .hp-proj-title-link {
+  display: block;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+.home-page .hp-proj-title-link:hover {
+  background: var(--background-modifier-hover);
+}
+
 /* === Project summary below timeline === */
 .home-page .hp-sidebar-divider {
   border-top: 1px solid var(--background-modifier-border);
@@ -71,16 +80,20 @@
   font-size: 0.75em;
   color: var(--text-normal) !important;
   text-decoration: none !important;
-  padding: 2px 0 2px 14px;
-  opacity: 0.75;
+  padding: 3px 4px 3px 10px;
+  border-radius: 6px;
+  border-left: 3px solid transparent;
+  opacity: 0.85;
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
-  transition: opacity 0.15s, color 0.15s;
+  transition: opacity 0.2s, color 0.2s, background 0.2s, padding-left 0.2s, border-color 0.2s;
 }
 .home-page .hp-proj-link:hover {
   opacity: 1;
   color: var(--text-accent) !important;
+  background: var(--background-modifier-hover);
+  padding-left: 14px;
+  border-left-color: var(--interactive-accent);
 }
 
 /* === Project progress bar === */
@@ -94,16 +107,24 @@
 .home-page .hp-progress-bar {
   flex: 1 1 auto;
   height: 4px;
-  border-radius: 2px;
+  border-radius: 3px;
   background: var(--background-modifier-border);
   overflow: hidden;
+  transition: box-shadow 0.2s, filter 0.2s;
 }
 
 .home-page .hp-progress-fill {
   height: 100%;
-  border-radius: 2px;
+  border-radius: 3px;
   background: var(--interactive-accent, #4b63fb);
-  transition: width 0.4s ease;
+  transition: width 0.4s ease, filter 0.2s;
+}
+
+.home-page .hp-progress-wrap:hover .hp-progress-bar {
+  box-shadow: 0 0 0 2px var(--background-modifier-border);
+}
+.home-page .hp-progress-wrap:hover .hp-progress-fill {
+  filter: brightness(1.2);
 }
 
 .home-page .hp-progress-pct {
@@ -113,6 +134,10 @@
   color: var(--text-muted);
   min-width: 28px;
   text-align: right;
+  transition: color 0.2s;
+}
+.home-page .hp-progress-wrap:hover .hp-progress-pct {
+  color: var(--text-accent);
 }
 
 /* === Collapse to single-column on narrow screens === */
