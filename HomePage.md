@@ -166,24 +166,30 @@ if (doing.length + planned.length + done.length > 0) {
     let pHtml = '<div class="hp-sidebar-divider"></div>';
     pHtml += '<div class="hp-sidebar-title" style="margin-top:4px;">📂 项目</div>';
 
+    function renderProject(p) {
+        const name = p.file.name;
+        const prog = Number(p.progress) || Number(p.进展) || 0;
+        let item = `<a data-href="${name}" href="${name}" class="internal-link hp-proj-link">${name}</a>`;
+        if (prog > 0) {
+            const pct = Math.min(100, Math.max(0, prog));
+            item += `<div class="hp-progress-wrap"><div class="hp-progress-bar"><div class="hp-progress-fill" style="width:${pct}%"></div></div><span class="hp-progress-pct">${pct}%</span></div>`;
+        }
+        return item;
+    }
+
     if (doing.length > 0) {
         pHtml += '<div class="hp-proj-group"><span class="hp-proj-dot doing"></span>进行中</div>';
-        for (const p of doing) {
-            pHtml += `<a data-href="${p.file.name}" href="${p.file.name}" class="internal-link hp-proj-link">${p.file.name}</a>`;
-        }
+        for (const p of doing) pHtml += renderProject(p);
     }
     if (planned.length > 0) {
         pHtml += '<div class="hp-proj-group"><span class="hp-proj-dot planned"></span>未开始</div>';
-        for (const p of planned) {
-            pHtml += `<a data-href="${p.file.name}" href="${p.file.name}" class="internal-link hp-proj-link">${p.file.name}</a>`;
-        }
+        for (const p of planned) pHtml += renderProject(p);
     }
     if (done.length > 0) {
         pHtml += '<div class="hp-proj-group"><span class="hp-proj-dot done"></span>已完成</div>';
-        for (const p of done) {
-            pHtml += `<a data-href="${p.file.name}" href="${p.file.name}" class="internal-link hp-proj-link">${p.file.name}</a>`;
-        }
+        for (const p of done) pHtml += renderProject(p);
     }
+
     projDiv.innerHTML = pHtml;
 }
 

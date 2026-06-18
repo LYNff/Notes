@@ -1,8 +1,10 @@
 ---
+progress: "50"
 type: project
 status: Doing
+
 ---
-# 信号的表示和处理
+ 信号的表示和处理
 ## lab databits
 [[databits]]
 

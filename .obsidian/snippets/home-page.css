@@ -83,6 +83,38 @@
   color: var(--text-accent) !important;
 }
 
+/* === Project progress bar === */
+.home-page .hp-progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 1px 0 1px 14px;
+}
+
+.home-page .hp-progress-bar {
+  flex: 1 1 auto;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--background-modifier-border);
+  overflow: hidden;
+}
+
+.home-page .hp-progress-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: var(--interactive-accent, #4b63fb);
+  transition: width 0.4s ease;
+}
+
+.home-page .hp-progress-pct {
+  flex: 0 0 auto;
+  font-size: 0.6em;
+  font-weight: 600;
+  color: var(--text-muted);
+  min-width: 28px;
+  text-align: right;
+}
+
 /* === Collapse to single-column on narrow screens === */
 /* Must use !important to override the injected <style> tag */
 @media (max-width: 900px) {
