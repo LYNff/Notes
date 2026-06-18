@@ -24,5 +24,7 @@
   "Appearance-dark@@card-layout-open-dark": true,
   "Editor@@line-hover-indicator": true,
   "Components@@vault-profile-autohide": false,
-  "Editor@@collapse-icon-restore": false
+  "Editor@@collapse-icon-restore": false,
+  "anuppuccin-theme-settings@@anuppuccin-theme-light": "ctp-latte",
+  "anuppuccin-theme-settings@@anuppuccin-theme-dark": "ctp-mocha"
 }

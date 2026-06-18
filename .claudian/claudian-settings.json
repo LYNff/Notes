@@ -25,7 +25,9 @@
     "claude": {
       "safeMode": "acceptEdits",
       "cliPath": "",
-      "cliPathsByHost": {},
+      "cliPathsByHost": {
+        "device:4bf269f8-515b-40d0-9405-33ff6aa5321d": "/home/lyn/.local/bin/claude"
+      },
       "loadUserSettings": true,
       "enableChrome": false,
       "enableBangBash": false,
