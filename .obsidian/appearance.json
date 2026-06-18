@@ -1,13 +1,13 @@
 {
   "cssTheme": "Border",
-  "theme": "system",
-  "nativeMenus": false,
-  "accentColor": "#4b63fb",
   "enabledCssSnippets": [
     "MCL Multi Column",
     "General Tweaks",
     "Daily Note Themes",
     "home-page",
     "timeline"
-  ]
+  ],
+  "theme": "system",
+  "nativeMenus": false,
+  "accentColor": "#4b63fb"
 }
