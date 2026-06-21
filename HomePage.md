@@ -77,6 +77,107 @@ while ((match = lineRe.exec(content)) !== null) {
         events.push({ date: parsed.date, time: parsed.time, title });
     }
 }
+
+// ── Auto-expand time-only entries ──
+// "下午 | task" → "19 下午 | task" so the date sticks and won't shift tomorrow
+let fixedContent = content;
+const timeOnlyLineRe = /^(\s*)(上午|中午|下午|傍晚|晚上)(\s*\|\s*.+)$/gm;
+let expanded = false;
+fixedContent = fixedContent.replace(timeOnlyLineRe, (_m, sp, time, rest) => {
+    expanded = true;
+    return `${sp}${today.getDate()} ${time}${rest}`;
+});
+if (expanded) {
+    const sFile = app.vault.getAbstractFileByPath("Calendar/Schedule.md");
+    if (sFile) {
+        await app.vault.modify(sFile, fixedContent);
+        // Re-parse with expanded content
+        events = [];
+        while ((match = lineRe.exec(fixedContent)) !== null) {
+            const parsed = parseDate(match[1]);
+            const title = match[2];
+            if (parsed && parsed.date && !isNaN(parsed.date.getTime())) {
+                events.push({ date: parsed.date, time: parsed.time, title });
+            }
+        }
+    }
+}
+
+// ── Move finished items to Finished Schedule.md ──
+const scheduleFile = app.vault.getAbstractFileByPath("Calendar/Schedule.md");
+if (scheduleFile) {
+    const rawContent = await app.vault.read(scheduleFile);
+    const rawLines = rawContent.split('\n');
+
+    const TIME_END = { '上午': 12*60, '中午': 13*60, '下午': 18*60, '傍晚': 19*60, '晚上': 23*60+59 };
+    const now = new Date();
+    const nowMinutes = now.getHours() * 60 + now.getMinutes();
+    const singleRe = /^\s*(.+?)\s*\|\s*(.+?)\s*$/;
+
+    const activeLines = [];
+    const finishedLines = [];
+
+    for (const line of rawLines) {
+        const m = line.match(singleRe);
+        if (!m) { activeLines.push(line); continue; }
+
+        const parsed = parseDate(m[1]);
+        const title = m[2];
+        if (!parsed || !parsed.date || isNaN(parsed.date.getTime())) {
+            activeLines.push(line); continue;
+        }
+
+        const diff = daysBetween(today, parsed.date);
+        let finished = false;
+
+        if (diff < 0) {
+            // Date already passed
+            finished = true;
+        } else if (diff === 0 && parsed.time) {
+            // Today + time label: check if the time period has passed
+            const endMin = TIME_END[parsed.time];
+            if (endMin !== undefined && nowMinutes > endMin) {
+                finished = true;
+            }
+        }
+
+        if (finished) {
+            const timeStr = parsed.time ? ` ${parsed.time}` : '';
+            finishedLines.push(`${fmtDate(parsed.date)}${timeStr} | ${title}`);
+        } else {
+            activeLines.push(line);
+        }
+    }
+
+    if (finishedLines.length > 0) {
+        // Write back active lines to Schedule.md
+        await app.vault.modify(scheduleFile, activeLines.join('\n'));
+
+        // Append to Finished Schedule.md
+        const finishedFile = app.vault.getAbstractFileByPath("Calendar/Finished Schedule.md");
+        if (finishedFile) {
+            const existing = (await app.vault.read(finishedFile)).trimEnd();
+            const sep = existing ? '\n' : '';
+            await app.vault.modify(finishedFile, existing + sep + finishedLines.join('\n'));
+        } else {
+            await app.vault.create("Calendar/Finished Schedule.md", finishedLines.join('\n'));
+        }
+
+        // Re-parse events from updated Schedule.md
+        events = [];
+        const newContent = activeLines.join('\n');
+        const parseRe = /^\s*(.+?)\s*\|\s*(.+?)\s*$/gm;
+        let m2;
+        while ((m2 = parseRe.exec(newContent)) !== null) {
+            const p2 = parseDate(m2[1]);
+            const t2 = m2[2];
+            if (p2 && p2.date && !isNaN(p2.date.getTime())) {
+                events.push({ date: p2.date, time: p2.time, title: t2 });
+            }
+        }
+    }
+}
+
 events.sort((a, b) => a.date - b.date);
 
 function fmtDate(d) {
@@ -108,6 +209,7 @@ if (events.length === 0) {
         const diff = daysBetween(today, d);
         const isToday = diff === 0;
         const isPast = diff < 0;
+        if (isPast) continue;
 
         if (monthIdx !== lastMonth) {
             lastMonth = monthIdx;
