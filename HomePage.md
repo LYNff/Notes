@@ -341,9 +341,11 @@ setTimeout(() => {
 >> [!success] ☀️ 今日计划
 >> ```tasks
 >> not done
->> due today
+>> # due today
+>> (due today) OR ((starts today) AND (no due date))
 >> # 隐藏多余的标记让界面更整洁
 >> hide due date
+>> hide start date
 >> hide task count
 >> hide backlink
 >> ```
