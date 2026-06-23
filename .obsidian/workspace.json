@@ -29,15 +29,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "f27d8930e36bd04f",
+    "id": "978c6cbd2890206e",
     "type": "split",
     "children": [
       {
-        "id": "7132dac1adcab98b",
+        "id": "8691dbff7eef26c5",
         "type": "tabs",
         "children": [
           {
-            "id": "524c26f10aaa998c",
+            "id": "cbc4e6ee5a2c926c",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -50,12 +50,12 @@
             }
           },
           {
-            "id": "0407b7e68065d2cc",
+            "id": "01150becaabe6865",
             "type": "leaf",
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "[\"type\"]",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -67,7 +67,7 @@
             }
           },
           {
-            "id": "baea9b5749bb540b",
+            "id": "9962ba5bff5503a8",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -80,22 +80,24 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 348.5
   },
   "right": {
-    "id": "db7c83d4e9ceaf74",
+    "id": "b3a69d6cb928ca0f",
     "type": "split",
     "children": [
       {
-        "id": "d6b263a75a211623",
+        "id": "8a1ccc771272a9a9",
         "type": "tabs",
+        "dimension": 32.295081967213115,
         "children": [
           {
-            "id": "0bda2b9de79450ad",
+            "id": "9169d50f46e66dad",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
+                "file": "CSAPP/bomb.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -105,24 +107,25 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "反向链接"
+              "title": "bomb 的反向链接列表"
             }
           },
           {
-            "id": "7fe3961b6b743a0e",
+            "id": "542474599feb0c74",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "CSAPP/CSAPP.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "出链"
+              "title": "CSAPP 的出链列表"
             }
           },
           {
-            "id": "0693e2ae37b47e1b",
+            "id": "4e0c6a3a539a1ec7",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -137,7 +140,7 @@
             }
           },
           {
-            "id": "fb40844ba6facdd8",
+            "id": "1d5b56d286cfc06e",
             "type": "leaf",
             "state": {
               "type": "all-properties",
@@ -151,21 +154,7 @@
             }
           },
           {
-            "id": "6ab8aba4c79fae88",
-            "type": "leaf",
-            "state": {
-              "type": "outline",
-              "state": {
-                "followCursor": false,
-                "showSearch": false,
-                "searchQuery": ""
-              },
-              "icon": "lucide-list",
-              "title": "大纲"
-            }
-          },
-          {
-            "id": "1a89faf739d383f9",
+            "id": "f04f45fd1fd98659",
             "type": "leaf",
             "state": {
               "type": "calendar",
@@ -173,45 +162,79 @@
               "icon": "calendar-with-checkmark",
               "title": "Calendar"
             }
+          }
+        ],
+        "currentTab": 4
+      },
+      {
+        "id": "5440199fed1800fa",
+        "type": "tabs",
+        "dimension": 67.70491803278689,
+        "children": [
+          {
+            "id": "a518a609b228b75a",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "graph",
+              "state": {},
+              "pinned": true,
+              "icon": "lucide-git-fork",
+              "title": "关系图谱"
+            }
           },
           {
-            "id": "2b9200758343ff26",
+            "id": "7d2f7fd0bc1f4886",
             "type": "leaf",
             "state": {
-              "type": "todo",
+              "type": "outline",
+              "state": {
+                "file": "cs/CSAPP/CSAPP.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "CSAPP 的大纲"
+            }
+          },
+          {
+            "id": "1b57ea64ea00a347",
+            "type": "leaf",
+            "state": {
+              "type": "tasks_timeline_view",
               "state": {},
-              "icon": "checkmark",
-              "title": "Todo List"
+              "icon": "calendar-clock",
+              "title": "Tasks Timeline"
             }
           }
         ],
-        "currentTab": 6
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 453.5
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:打开快速切换": false,
-      "graph:查看关系图谱": false,
-      "canvas:新建白板": false,
-      "daily-notes:打开/创建今天的日记": false,
-      "templates:插入模板": false,
-      "command-palette:打开命令面板": false,
-      "workspaces:管理工作区布局": false,
-      "bases:新建数据库": false,
       "obsidian-excalidraw-plugin:新建绘图文件": false,
       "realclaudian:Open Claudian": false,
       "darlal-switcher-plus:Open in Headings Mode": false,
       "darlal-switcher-plus:Open Symbols for the active editor": false,
       "homepage:Open homepage": false,
       "templater-obsidian:Templater": false,
-      "fast-note-sync:FNS菜单": false,
+      "switcher:打开快速切换": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "graph:查看关系图谱": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false,
+      "workspaces:管理工作区布局": false,
       "periodic-notes:Open today": false
     }
   },
-  "active": "2b9200758343ff26",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
     "HomePage.md"
   ]
