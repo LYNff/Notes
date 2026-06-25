@@ -75,5 +75,7 @@ CPU 通常包含以下几个部分：运算器(ALU)、控制器(CU)、寄存器�
 [[arch]]
 # 程序优化
 # 内存层次结构(Memory Hierarchy)
+为了方便处理器的读取，我们建立了高速读取缓冲区来加速处理器的读取速度
+![[Excalidraw/CSAPP.excalidraw.md#^frame=1FDNON2e|100%]]
 ## lab Cache
 [[cache]]

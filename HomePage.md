@@ -342,7 +342,7 @@ setTimeout(() => {
 >> ```tasks
 >> not done
 >> # due today
->> (due today) OR ((starts today) AND (no due date))
+>> (due today) OR ((starts before today) AND (no due date))
 >> # 隐藏多余的标记让界面更整洁
 >> hide due date
 >> hide start date
