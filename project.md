@@ -3,16 +3,16 @@ cssclasses:
   - project-dashboard
 obsidianUIMode: preview
 projects:
+  - name: CSAPP
+    type: 课程学习
+    progress: 50
+    status: Doing
+    notes: CSAPP
   - name: Leetcode Hot 100
     type: 算法刷题
     progress: 40
     status: Doing
     notes: hot100
-  - name: CSAPP
-    type: 课程学习
-    progress: 45
-    status: Doing
-    notes: CSAPP
   - name: ICSPA
     type: 课程学习
     progress: 0

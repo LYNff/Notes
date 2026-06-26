@@ -1,6 +1,6 @@
 {
   "syncEnabled": true,
-  "configSyncEnabled": false,
+  "configSyncEnabled": true,
   "logEnabled": "off",
   "startupDelay": 500,
   "offlineSyncStrategy": "",

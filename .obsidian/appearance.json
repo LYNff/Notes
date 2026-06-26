@@ -1,14 +1,12 @@
 {
   "cssTheme": "Border",
+  "accentColor": "#5569ff",
   "enabledCssSnippets": [
-    "MCL Multi Column",
-    "General Tweaks",
     "Daily Note Themes",
+    "General Tweaks",
     "home-page",
-    "timeline",
-    "project-dashboard"
-  ],
-  "theme": "system",
-  "nativeMenus": false,
-  "accentColor": "#4b63fb"
+    "MCL Multi Column",
+    "project-dashboard",
+    "timeline"
+  ]
 }

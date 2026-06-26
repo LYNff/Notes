@@ -343,6 +343,7 @@ setTimeout(() => {
 >> not done
 >> # due today
 >> (due today) OR ((starts before today) AND (no due date))
+>> filter by function return task.happens.moment !== null
 >> # 隐藏多余的标记让界面更整洁
 >> hide due date
 >> hide start date
