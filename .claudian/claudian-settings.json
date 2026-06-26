@@ -14,6 +14,7 @@
   "sharedEnvironmentVariables": "",
   "envSnippets": [],
   "customContextLimits": {},
+  "customModelAliases": {},
   "keyboardNavigation": {
     "scrollUpKey": "w",
     "scrollDownKey": "s",
@@ -48,7 +49,11 @@
       "environmentVariables": "",
       "environmentHash": "",
       "installationMethodsByHost": {
-        "device:4bf269f8-515b-40d0-9405-33ff6aa5321d": "native-windows"
+        "device:4bf269f8-515b-40d0-9405-33ff6aa5321d": "native-windows",
+        "device:b75952a4-ff93-4ea4-863f-f2d02f636302": "native-windows",
+        "device:dcee5aaa-e381-4f4b-a35d-912822251de2": "native-windows",
+        "device:c398a8fe-25bb-43fe-8ea5-c6578c9b637a": "native-windows",
+        "device:52baa868-7e8c-45d9-aea4-3f08d7b1cccc": "native-windows"
       },
       "wslDistroOverridesByHost": {}
     },
@@ -62,6 +67,18 @@
       "preferredThinkingByModel": {},
       "selectedMode": "",
       "thinkingOptionsByModel": {},
+      "visibleModels": []
+    },
+    "pi": {
+      "cliPath": "",
+      "cliPathsByHost": {},
+      "discoveredModels": [],
+      "enabled": false,
+      "environmentHash": "",
+      "environmentVariables": "",
+      "modelAliases": {},
+      "preferredThinkingByModel": {},
+      "toolMode": "all",
       "visibleModels": []
     }
   },
@@ -81,9 +98,10 @@
   },
   "lastCustomModel": "",
   "maxTabs": 3,
-  "tabBarPosition": "input",
   "enableAutoScroll": true,
   "deferMathRenderingDuringStreaming": true,
+  "expandFileEditsByDefault": false,
   "chatViewPlacement": "right-sidebar",
-  "hiddenProviderCommands": {}
+  "hiddenProviderCommands": {},
+  "tabBarPosition": "input"
 }
