@@ -53,7 +53,8 @@
         "device:b75952a4-ff93-4ea4-863f-f2d02f636302": "native-windows",
         "device:dcee5aaa-e381-4f4b-a35d-912822251de2": "native-windows",
         "device:c398a8fe-25bb-43fe-8ea5-c6578c9b637a": "native-windows",
-        "device:52baa868-7e8c-45d9-aea4-3f08d7b1cccc": "native-windows"
+        "device:52baa868-7e8c-45d9-aea4-3f08d7b1cccc": "native-windows",
+        "device:45b51d9d-6176-4504-9179-4eae19c8dd0d": "native-windows"
       },
       "wslDistroOverridesByHost": {}
     },

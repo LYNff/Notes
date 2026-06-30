@@ -22,34 +22,6 @@
               "icon": "lucide-file",
               "title": "HomePage"
             }
-          },
-          {
-            "id": "af28d418d033e9d9",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "cs/CSAPP/CSAPP.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "CSAPP"
-            }
-          },
-          {
-            "id": "c7c512e9a1608a40",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "School/计算机组成原理期末复习.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "计算机组成原理期末复习"
-            }
           }
         ]
       }
@@ -108,8 +80,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 348.5,
-    "collapsed": true
+    "width": 348.5
   },
   "right": {
     "id": "b3a69d6cb928ca0f",
@@ -126,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "CSAPP/bomb.md",
+                "file": "School/计算机组成原理期末复习.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -136,7 +107,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "bomb 的反向链接列表"
+              "title": "计算机组成原理期末复习 的反向链接列表"
             }
           },
           {
@@ -145,12 +116,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "CSAPP/CSAPP.md",
+                "file": "School/计算机组成原理期末复习.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "CSAPP 的出链列表"
+              "title": "计算机组成原理期末复习 的出链列表"
             }
           },
           {
@@ -218,13 +189,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "cs/CSAPP/cache.md",
+                "file": "Excalidraw/计组.excalidraw.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "cache 的大纲"
+              "title": "计组.excalidraw 的大纲"
             }
           },
           {
@@ -246,6 +217,7 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "fast-note-sync:FNS菜单": false,
       "switcher:打开快速切换": false,
       "canvas:新建白板": false,
       "daily-notes:打开/创建今天的日记": false,
@@ -260,24 +232,27 @@
       "darlal-switcher-plus:Open Symbols for the active editor": false,
       "homepage:Open homepage": false,
       "templater-obsidian:Templater": false,
-      "periodic-notes:Open today": false,
-      "fast-note-sync:FNS Menu": false
+      "periodic-notes:Open today": false
     }
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
+    "Calendar/Journal/Weekly/2026-W26.md",
     "School/计算机组成原理期末复习.md",
-    "cs/CSAPP/CSAPP.md",
     "HomePage.md",
+    "Calendar/Journal/Daily/2026-06-30.md",
+    "Excalidraw/计组.excalidraw.md",
     "Excalidraw/CSAPP.excalidraw.md",
-    "Excalidraw/Drawing 2026-06-26 16.56.17.excalidraw.md",
+    "Calendar/Journal/Daily/2026-06-27.md",
+    "cs/CSAPP/CSAPP.md",
+    "Calendar/Journal/Daily/2026-06-26.md",
+    "Calendar/Journal/Daily/2026-06-25.md",
+    "Calendar/Finished Schedule.md",
     "Excalidraw/Drawing 2026-06-26 16.53.50.excalidraw.md",
     "Habits Tracker.md",
     "Calendar/Journal/Daily/2026-06-24.md",
-    "Calendar/Journal/Daily/2026-06-25.md",
     "project.md",
     "cs/CSAPP/cache.md",
-    "Calendar/Finished Schedule.md",
     "Calendar/Schedule.md",
     "Attachments/Pasted image 20260606173733.png",
     "Attachments/Pasted image 20260606172718.png",
