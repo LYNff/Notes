@@ -19,5 +19,6 @@
   "tasks-calendar-wrapper",
   "contribution-graph",
   "metaedit",
-  "excalidraw-extras"
+  "excalidraw-extras",
+  "editor-width-slider"
 ]

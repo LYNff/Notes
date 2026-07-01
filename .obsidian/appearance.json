@@ -8,5 +8,6 @@
     "MCL Multi Column",
     "project-dashboard",
     "timeline"
-  ]
+  ],
+  "theme": "system"
 }

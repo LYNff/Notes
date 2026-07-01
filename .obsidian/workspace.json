@@ -22,8 +22,35 @@
               "icon": "lucide-file",
               "title": "HomePage"
             }
+          },
+          {
+            "id": "c09c61421824b0ce",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Calendar/Schedule.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Schedule"
+            }
+          },
+          {
+            "id": "71f3686dd2d20eb9",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "Excalidraw/计组.excalidraw.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "计组.excalidraw"
+            }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -80,7 +107,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 348.5
+    "width": 348.5,
+    "collapsed": true
   },
   "right": {
     "id": "b3a69d6cb928ca0f",
@@ -235,25 +263,36 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e7a7b303c61786dc",
+  "active": "71f3686dd2d20eb9",
   "lastOpenFiles": [
-    "Calendar/Journal/Weekly/2026-W26.md",
-    "School/计算机组成原理期末复习.md",
     "HomePage.md",
-    "Calendar/Journal/Daily/2026-06-30.md",
+    "Calendar/Schedule.md",
+    "Calendar/Finished Schedule.md",
+    "School/计算机组成原理期末复习.md",
     "Excalidraw/计组.excalidraw.md",
+    "HomePage.md.tmp.420555.a9523385facf",
+    "HomePage.md.tmp.420555.5714c53a384b",
+    "HomePage.md.tmp.420555.2c386f5a4f38",
+    "HomePage.md.tmp.420555.036c85e755e3",
+    "Habits Tracker.md",
+    "Calendar/Journal/Daily/2026-06-30.md",
+    "Templates/Daily-TEMPLATE.md",
+    "HomePage.md.tmp.420555.7bdaae07cd12",
+    "HomePage.md.tmp.420555.6e4449c2c003",
+    "HomePage.md.tmp.420555.ca9aa0107282",
+    "Bases/Calendar.base",
+    "Bases/On This Day.base",
+    "HomePage.md.tmp.420555.22c306572f5a",
+    "project.md",
+    "Calendar/Journal/Weekly/2026-W26.md",
     "Excalidraw/CSAPP.excalidraw.md",
     "Calendar/Journal/Daily/2026-06-27.md",
     "cs/CSAPP/CSAPP.md",
     "Calendar/Journal/Daily/2026-06-26.md",
     "Calendar/Journal/Daily/2026-06-25.md",
-    "Calendar/Finished Schedule.md",
     "Excalidraw/Drawing 2026-06-26 16.53.50.excalidraw.md",
-    "Habits Tracker.md",
     "Calendar/Journal/Daily/2026-06-24.md",
-    "project.md",
     "cs/CSAPP/cache.md",
-    "Calendar/Schedule.md",
     "Attachments/Pasted image 20260606173733.png",
     "Attachments/Pasted image 20260606172718.png",
     "Attachments/Pasted image 20260603193405.png",
@@ -265,19 +304,9 @@
     "Attachments/Pasted image 20260625205455.png",
     "Excalidraw/Scripts/Downloaded/Mindmap Builder.svg",
     "Excalidraw/Scripts/Downloaded/Mindmap Builder.md",
-    "Excalidraw/Scripts/Downloaded",
-    "Excalidraw/Scripts",
-    "Excalidraw",
     "Calendar/Journal/Daily/2026-06-22.md",
     "Calendar/Journal/Daily/2026-06-23.md",
-    "Bases/On This Day.base",
     "Calendar/To do list.md",
-    "Calendar/Journal/Daily/2026-06-18.md",
-    "School/quiz.html",
-    "School/questions.json",
-    "School/short_answer.json",
-    "School/generate_quiz.py",
-    "School/parse_short_answer.py",
-    "School/parse_questions.py"
+    "Calendar/Journal/Daily/2026-06-18.md"
   ]
 }

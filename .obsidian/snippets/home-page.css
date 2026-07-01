@@ -1,28 +1,265 @@
 /* ============================================
-   HomePage Layout — content left + timeline fixed-right
-   Mostly handled by injected <style> from dataviewjs.
-   This file: base setup + responsive collapse.
+   HomePage Layout & Styling
    ============================================ */
 
+/* === 1. CSS Custom Properties === */
 .home-page {
   --file-line-width: 100%;
+
+  /* Semantic status colors */
+  --hp-doing:       #22c55e;
+  --hp-overdue:     #ef4444;
+  --hp-planned:     #eab308;
+  --hp-done:        #6b7280;
+  --hp-today:       #ff6b6b;
+
+  /* Surface layers */
+  --hp-glass-bg:    color-mix(in srgb, var(--background-primary) 80%, transparent);
+  --hp-glass-border: color-mix(in srgb, var(--background-modifier-border) 55%, transparent);
+  --hp-card-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  --hp-card-shadow-hover: 0 6px 24px rgba(0, 0, 0, 0.09);
+
+  /* Accent gradient stops */
+  --hp-accent-2: #8b5cf6;
+  --hp-accent-3: #ec4899;
 }
 
-/* Reading view fills available width */
+/* === 2. Page background & reading view === */
+
+/* Subtle radial glow from top-center */
 .home-page .markdown-reading-view {
   max-width: 95% !important;
   width: 95% !important;
+  position: relative;
 }
 
-/* === Timeline block (the .block-language-dataviewjs wrapper) === */
-.home-page .hp-timeline-block {
+/* Kill horizontal scrollbar — card shadows + glows can trigger it */
+.home-page .markdown-reading-view,
+.home-page .markdown-preview-view,
+.home-page .markdown-preview-sizer,
+.home-page .markdown-preview-section {
+  overflow-x: hidden !important;
+}
+
+.home-page .markdown-reading-view::before {
+  content: '';
+  position: fixed;
+  top: -120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center,
+    color-mix(in srgb, var(--interactive-accent) 6%, transparent) 0%,
+    transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Dark mode — slightly stronger glow */
+.theme-dark .home-page .markdown-reading-view::before {
+  background: radial-gradient(ellipse at center,
+    color-mix(in srgb, var(--interactive-accent) 10%, transparent) 0%,
+    transparent 70%);
+}
+
+/* ============================================
+   3. Weather + Date Banner — single line, centered
+   ============================================ */
+.home-page .hp-weather-banner {
+  text-align: center;
+  padding: 14px 0 16px 0;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  font-size: 1.05em;
+  color: var(--text-muted);
+  letter-spacing: 0.03em;
+}
+
+.home-page .hp-we-emoji {
+  margin-right: 4px;
+}
+
+.home-page .hp-we-temp {
+  font-weight: 700;
+  color: var(--text-normal);
+}
+
+.home-page .hp-we-sep {
+  margin: 0 10px;
+  opacity: 0.35;
+}
+
+/* ============================================
+   4. Hero Stats Bar
+   ============================================ */
+.home-page .hp-hero {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 40px;
+  padding-bottom: 4px;
+}
+
+/* --- Individual stat card --- */
+.home-page .hp-stat-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
   background: var(--background-primary);
   border: 1px solid var(--background-modifier-border);
-  border-radius: 14px;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+  padding: 0;                      /* body handles padding */
+  overflow: visible;               /* allow shadow/glow to bleed out */
+  cursor: default;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.3s ease,
+              border-color 0.3s ease;
 }
 
-/* === Sidebar inner === */
+/* --- Top accent bar — colored stripe per card type --- */
+.home-page .hp-stat-accent {
+  height: 4px;
+  border-radius: 4px 4px 0 0;
+  flex-shrink: 0;
+}
+
+.home-page .card-doing    .hp-stat-accent { background: var(--hp-doing); }
+.home-page .card-overdue  .hp-stat-accent { background: var(--hp-overdue); }
+.home-page .card-projects .hp-stat-accent { background: var(--interactive-accent); }
+
+/* --- Card body: icon circle + text side-by-side --- */
+.home-page .hp-stat-body {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px 14px 18px;
+  flex: 1;
+}
+
+/* --- Icon in a tinted circle --- */
+.home-page .hp-stat-icon-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-size: 1.3em;
+  flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.home-page .hp-stat-card:hover .hp-stat-icon-circle {
+  transform: scale(1.12) rotate(-5deg);
+}
+
+/* Icon circle tint per card type */
+.home-page .card-doing    .hp-stat-icon-circle { background: color-mix(in srgb, var(--hp-doing) 15%, transparent); }
+.home-page .card-overdue  .hp-stat-icon-circle { background: color-mix(in srgb, var(--hp-overdue) 15%, transparent); }
+.home-page .card-projects .hp-stat-icon-circle { background: color-mix(in srgb, var(--interactive-accent) 15%, transparent); }
+
+/* --- Text content (value + label) --- */
+.home-page .hp-stat-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.home-page .hp-stat-value {
+  font-size: 1.7em;
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--text-normal);
+  letter-spacing: -0.02em;
+}
+
+.home-page .hp-stat-label {
+  font-size: 0.7em;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+}
+
+/* --- Decorative background glow --- */
+.home-page .hp-stat-glow {
+  position: absolute;
+  bottom: 0;
+  right: 8px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  opacity: 0;
+  filter: blur(18px);
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.home-page .hp-stat-card:hover .hp-stat-glow {
+  opacity: 0.18;
+  transform: scale(1.2);
+}
+
+.home-page .card-doing    .hp-stat-glow { background: var(--hp-doing); }
+.home-page .card-overdue  .hp-stat-glow { background: var(--hp-overdue); }
+.home-page .card-projects .hp-stat-glow { background: var(--interactive-accent); }
+
+/* --- Hover effects --- */
+.home-page .hp-stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  border-color: color-mix(in srgb, var(--interactive-accent) 40%, transparent);
+}
+
+/* Card-specific hover border tint */
+.home-page .card-doing:hover   { border-color: color-mix(in srgb, var(--hp-doing) 45%, transparent); }
+.home-page .card-overdue:hover { border-color: color-mix(in srgb, var(--hp-overdue) 45%, transparent); }
+.home-page .card-projects:hover { border-color: color-mix(in srgb, var(--interactive-accent) 50%, transparent); }
+
+/* === 4. Timeline Sidebar — glassmorphism upgrade === */
+.home-page .hp-timeline-block {
+  background: var(--hp-glass-bg);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid var(--hp-glass-border);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.3s ease;
+}
+
+/* Top gradient accent bar */
+.home-page .hp-timeline-block::before {
+  content: '';
+  display: block;
+  height: 3px;
+  background: linear-gradient(90deg,
+    var(--interactive-accent),
+    var(--hp-accent-2),
+    var(--hp-accent-3));
+  border-radius: 3px 3px 0 0;
+  opacity: 0.85;
+}
+
+/* Sidebar scrollbar */
+.home-page .hp-timeline-block::-webkit-scrollbar {
+  width: 4px;
+}
+.home-page .hp-timeline-block::-webkit-scrollbar-track {
+  background: transparent;
+}
+.home-page .hp-timeline-block::-webkit-scrollbar-thumb {
+  background: var(--background-modifier-border);
+  border-radius: 4px;
+}
+.home-page .hp-timeline-block::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* === 5. Sidebar inner === */
 .home-page .hp-timeline-sidebar {
   padding: 0 12px 12px 12px;
 }
@@ -48,10 +285,11 @@
   background: var(--background-modifier-hover);
 }
 
-/* === Project summary below timeline === */
+/* === 6. Project summary below timeline === */
 .home-page .hp-sidebar-divider {
   border-top: 1px solid var(--background-modifier-border);
   margin: 10px 0 6px 0;
+  opacity: 0.6;
 }
 
 .home-page .hp-proj-group {
@@ -70,10 +308,14 @@
   height: 7px;
   border-radius: 50%;
   flex-shrink: 0;
+  transition: box-shadow 0.2s;
 }
-.home-page .hp-proj-dot.doing   { background: #22c55e; }
-.home-page .hp-proj-dot.planned { background: #eab308; }
-.home-page .hp-proj-dot.done    { background: #6b7280; }
+.home-page .hp-proj-dot.doing   {
+  background: var(--hp-doing);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--hp-doing) 50%, transparent);
+}
+.home-page .hp-proj-dot.planned { background: var(--hp-planned); }
+.home-page .hp-proj-dot.done    { background: var(--hp-done); }
 
 .home-page .hp-proj-link {
   display: block;
@@ -96,7 +338,7 @@
   border-left-color: var(--interactive-accent);
 }
 
-/* === Project progress bar === */
+/* === 7. Project progress bar === */
 .home-page .hp-progress-wrap {
   display: flex;
   align-items: center;
@@ -116,7 +358,7 @@
 .home-page .hp-progress-fill {
   height: 100%;
   border-radius: 3px;
-  background: var(--interactive-accent, #4b63fb);
+  background: linear-gradient(90deg, var(--interactive-accent), var(--hp-accent-2));
   transition: width 0.4s ease, filter 0.2s;
 }
 
@@ -140,8 +382,260 @@
   color: var(--text-accent);
 }
 
-/* === Collapse to single-column on narrow screens === */
-/* Must use !important to override the injected <style> tag */
+/* === Recent Notes in sidebar === */
+.home-page .hp-recent-notes { }
+
+.home-page .hp-recent-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82em;
+  color: var(--text-normal) !important;
+  text-decoration: none !important;
+  padding: 4px 4px 4px 10px;
+  border-radius: 6px;
+  border-left: 3px solid transparent;
+  opacity: 0.8;
+  transition: opacity 0.2s, background 0.2s, padding-left 0.2s, border-color 0.2s;
+}
+
+.home-page .hp-recent-link:hover {
+  opacity: 1;
+  background: var(--background-modifier-hover);
+  padding-left: 14px;
+  border-left-color: var(--interactive-accent);
+}
+
+.home-page .hp-recent-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.home-page .hp-recent-time {
+  flex-shrink: 0;
+  font-size: 0.75em;
+  color: var(--text-muted);
+  margin-left: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================
+   8. Task Callout Cards — card-level + title bar, safe for checkboxes
+   ============================================ */
+
+/* --- Shared card shell --- */
+.home-page .callout {
+  position: relative;              /* anchor the ::before accent bar */
+  border-radius: 14px !important;
+  border: 1px solid var(--background-modifier-border) !important;
+  box-shadow: var(--hp-card-shadow);
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.home-page .callout:hover {
+  box-shadow: var(--hp-card-shadow-hover);
+}
+
+/* --- Left accent stripe (colored by callout type) --- */
+.home-page .callout::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 14px;
+  bottom: 14px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  opacity: 0.7;
+  transition: opacity 0.25s ease, top 0.25s ease, bottom 0.25s ease;
+}
+.home-page .callout:hover::before {
+  opacity: 1;
+  top: 10px;
+  bottom: 10px;
+}
+
+/* Accent colors per type */
+.home-page [data-callout="success"]::before   { background: #22c55e; }
+.home-page [data-callout="warning"]::before   { background: #f59e0b; }
+.home-page [data-callout="important"]::before { background: #ef4444; }
+.home-page [data-callout="info"]::before      { background: #3b82f6; }
+.home-page [data-callout="todo"]::before      { background: #8b5cf6; }
+
+/* --- Title bar --- */
+.home-page .callout-title {
+  padding: 12px 14px 6px 14px;
+  font-weight: 700;
+  font-size: 0.92em;
+}
+
+/* Title icon — bigger */
+.home-page .callout-icon {
+  flex-shrink: 0;
+  margin-right: 8px;
+}
+.home-page .callout-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Subtle tinted title background per type */
+.home-page [data-callout="success"]   .callout-title { background: color-mix(in srgb, #22c55e 6%, transparent); border-radius: 13px 13px 0 0; }
+.home-page [data-callout="warning"]   .callout-title { background: color-mix(in srgb, #f59e0b 6%, transparent); border-radius: 13px 13px 0 0; }
+.home-page [data-callout="important"] .callout-title { background: color-mix(in srgb, #ef4444 6%, transparent); border-radius: 13px 13px 0 0; }
+.home-page [data-callout="info"]      .callout-title { background: color-mix(in srgb, #3b82f6 6%, transparent); border-radius: 13px 13px 0 0; }
+.home-page [data-callout="todo"]      .callout-title { background: color-mix(in srgb, #8b5cf6 6%, transparent); border-radius: 13px 13px 0 0; }
+
+/* --- Content area --- */
+.home-page .callout-content {
+  padding: 4px 8px 8px 8px;
+}
+
+/* --- Zebra striping for task rows --- */
+.home-page .callout .task-list-item:nth-child(even) {
+  background-color: color-mix(in srgb, var(--text-normal) 3%, transparent);
+}
+
+/* ============================================
+   9. Section Dividers
+   ============================================ */
+.home-page hr {
+  height: 2px;
+  border: none;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--background-modifier-border) 15%,
+    var(--interactive-accent) 50%,
+    var(--background-modifier-border) 85%,
+    transparent 100%);
+  margin: 32px 0 28px 0;
+  opacity: 0.5;
+}
+
+/* ============================================
+   10. Contribution Graph — card wrapper
+   ============================================ */
+.home-page .contribution-graph-container {
+  border-radius: 14px;
+  padding: 16px 16px 12px 16px;
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  box-shadow: var(--hp-card-shadow);
+  transition: box-shadow 0.25s ease;
+  /* left accent — matches callout card style */
+  position: relative;
+  padding-left: 22px;
+}
+
+.home-page .contribution-graph-container::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 14px;
+  bottom: 14px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--interactive-accent);
+  opacity: 0.6;
+}
+
+.home-page .contribution-graph-container:hover {
+  box-shadow: var(--hp-card-shadow-hover);
+}
+
+/* Graph title */
+.home-page .contribution-graph-title {
+  font-weight: 600;
+  font-size: 0.85em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Graph cell hover */
+.home-page .contribution-graph-cell {
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+.home-page .contribution-graph-cell:hover {
+  transform: scale(1.25);
+  filter: brightness(1.3);
+}
+
+/* ============================================
+   11. Section Headers
+   ============================================ */
+.home-page h2 {
+  font-size: 1.15em;
+  font-weight: 700;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--background-modifier-border);
+  position: relative;
+}
+
+.home-page h2::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 48px;
+  height: 2px;
+  background: var(--interactive-accent);
+  border-radius: 1px;
+  transition: width 0.3s ease;
+}
+
+.home-page h2:hover::after {
+  width: 80px;
+}
+
+/* ============================================
+   12. Dark / Light Mode Refinements
+   ============================================ */
+.theme-dark .home-page .hp-timeline-block {
+  background: color-mix(in srgb, var(--background-primary) 75%, transparent);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.theme-dark .home-page .hp-stat-card {
+  background: var(--background-primary);
+  border-color: color-mix(in srgb, var(--background-modifier-border) 70%, transparent);
+}
+
+.theme-dark .home-page .callout {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+}
+
+.theme-dark .home-page .callout:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+}
+
+.theme-dark .home-page hr {
+  opacity: 0.35;
+}
+
+.theme-light .home-page .hp-timeline-block {
+  background: color-mix(in srgb, var(--background-primary) 88%, transparent);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+}
+
+.theme-light .home-page .hp-stat-card {
+  background: var(--background-primary);
+}
+
+/* ============================================
+   13. Responsive Collapse
+   Must use !important to override the injected <style> tag
+   ============================================ */
+@media (max-width: 1100px) {
+  .home-page .hp-hero {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 900px) {
   .home-page .hp-timeline-block {
     position: static !important;
@@ -152,6 +646,11 @@
     overflow-y: visible !important;
     margin-bottom: 24px;
     box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .home-page .hp-timeline-block::before {
+    display: none;
   }
   .home-page .markdown-preview-view,
   .home-page .markdown-preview-sizer,
@@ -162,5 +661,27 @@
   }
   .home-page .markdown-reading-view {
     padding-right: 0 !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .home-page .hp-hero {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .home-page .hp-stat-body {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+  .home-page .hp-stat-icon-circle {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1em;
+  }
+  .home-page .hp-stat-value {
+    font-size: 1.3em;
+  }
+  .home-page .hp-stat-label {
+    font-size: 0.62em;
   }
 }

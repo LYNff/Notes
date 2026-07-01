@@ -38,7 +38,3 @@ cssclasses:
 - 🏃‍♀‍➡\[workout::]
 
 #### End-of-Day Checklist
-
----
-![[On This Day.base]] 
-

@@ -7,6 +7,73 @@ obsidianUIMode: preview
 
 ```dataviewjs
 // ============================================================
+//  Weather + Date Banner
+//  Uses GPS (navigator.geolocation) first, then CITY, then IP.
+//  Set a fallback city if GPS is unavailable:
+//    const CITY = 'Shanghai'
+// ============================================================
+const CITY = '';   // fallback city (English name), leave empty to skip
+const WEEKDAYS = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+
+const now = new Date();
+const dateStr = `${now.getFullYear()} 年 ${now.getMonth() + 1} 月 ${now.getDate()} 日  ${WEEKDAYS[now.getDay()]}`;
+
+const WEATHER_EMOJI = {
+  '113': '☀️', '116': '⛅', '119': '☁️', '122': '☁️', '143': '🌫️',
+  '176': '🌦️', '179': '🌨️', '182': '🌨️', '185': '🌨️',
+  '200': '⛈️', '227': '❄️', '230': '❄️',
+  '248': '🌫️', '260': '🌫️',
+  '263': '🌧️', '266': '🌧️', '281': '🌧️', '284': '🌧️',
+  '293': '🌧️', '296': '🌧️', '299': '🌧️', '302': '🌧️',
+  '305': '🌧️', '308': '🌧️', '311': '🌧️', '314': '🌧️',
+  '317': '🌨️', '320': '🌨️', '323': '🌨️', '326': '🌨️',
+  '329': '❄️', '332': '❄️', '335': '❄️', '338': '❄️',
+  '350': '🌨️', '353': '🌦️', '356': '🌧️', '359': '⛈️',
+  '362': '🌨️', '365': '🌨️', '368': '🌨️', '371': '❄️',
+  '374': '🌨️', '377': '🌨️',
+  '386': '⛈️', '389': '⛈️', '392': '⛈️', '395': '⛈️',
+};
+
+// --- Build weather URL: GPS > city > IP ---
+function getWeatherUrl() {
+  return new Promise((resolve) => {
+    // 1. Try browser geolocation (real GPS, bypasses proxy)
+    if (navigator && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => resolve(`https://wttr.in/?format=j1&lat=${pos.coords.latitude}&lon=${pos.coords.longitude}`),
+        () => fallback(),
+        { timeout: 4000, maximumAge: 600000 }  // cache 10 min
+      );
+    } else { fallback(); }
+
+    function fallback() {
+      // 2. Use explicit city
+      if (CITY) { resolve(`https://wttr.in/${encodeURIComponent(CITY)}?format=j1`); }
+      // 3. Fall back to IP geolocation (same as before — proxy-prone)
+      else      { resolve('https://wttr.in/?format=j1'); }
+    }
+  });
+}
+
+let weatherHTML = '';
+try {
+  const url = await getWeatherUrl();
+  const resp = await fetch(url);
+  if (resp.ok) {
+    const data = await resp.json();
+    const cc = data.current_condition[0];
+    const emoji = WEATHER_EMOJI[cc.weatherCode] || '🌤️';
+    weatherHTML = `<span class="hp-we-emoji">${emoji}</span> <span class="hp-we-temp">${cc.temp_C}°C</span>`;
+  }
+} catch (_) {}
+
+dv.container.innerHTML = `<div class="hp-weather-banner">
+  ${weatherHTML || '📅 今日概览'}<span class="hp-we-sep">·</span>${dateStr}
+</div>`;
+```
+
+```dataviewjs
+// ============================================================
 //  Timeline Sidebar — reads Calendar/Schedule.md
 //  Smart date parsing:
 //    "24 | event"          → current month + day
@@ -16,6 +83,8 @@ obsidianUIMode: preview
 //    "明天上午 | event"    → tomorrow morning
 //    "24 下午 | event"     → day + time-of-day
 // ============================================================
+
+dv.container.innerHTML = '';  // prevent duplicate on re-render
 
 const content = await dv.io.load("Calendar/Schedule.md");
 const today = new Date();
@@ -295,6 +364,38 @@ if (doing.length + planned.length + done.length > 0) {
     projDiv.innerHTML = pHtml;
 }
 
+// --- Recent Notes: latest 3, exclude system folders & root files ---
+const EXCLUDE = ['Base/', 'Calendar/', 'Templates/', 'Attachments/'];
+const recentNotes = dv.pages()
+  .where(p => {
+    // skip root-level loose files
+    if (!p.file.folder) return false;
+    // skip excluded folders
+    if (EXCLUDE.some(prefix => p.file.path.startsWith(prefix))) return false;
+    return true;
+  })
+  .sort(p => p.file.mtime, 'desc')
+  .limit(3);
+
+if (recentNotes.length > 0) {
+    const recentDiv = dv.el('div', '');
+    recentDiv.classList.add('hp-recent-notes');
+    let rHtml = '<div class="hp-sidebar-divider"></div>';
+    rHtml += '<div class="hp-sidebar-title" style="margin-top:4px;">📝 最近笔记</div>';
+
+    for (const note of recentNotes) {
+        const name = note.file.name;
+        const mtime = new Date(note.file.mtime);
+        const timeStr = `${mtime.getMonth() + 1}/${mtime.getDate()} ${String(mtime.getHours()).padStart(2, '0')}:${String(mtime.getMinutes()).padStart(2, '0')}`;
+        rHtml += `<a data-href="${name}" href="${name}" class="internal-link hp-recent-link">
+          <span class="hp-recent-name">${name}</span>
+          <span class="hp-recent-time">${timeStr}</span>
+        </a>`;
+    }
+
+    recentDiv.innerHTML = rHtml;
+}
+
 // --- Two-column layout: inject !important CSS + fixed timeline ---
 setTimeout(() => {
     let tlBlock = dv.container;
@@ -334,6 +435,83 @@ setTimeout(() => {
 }, 200);
 ```
 
+```dataviewjs
+// ============================================================
+//  Hero Stats Bar — at-a-glance dashboard
+// ============================================================
+const WEEKDAYS = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+const MONTHS = ["一月", "二月", "三月", "四月", "五月", "六月",
+                "七月", "八月", "九月", "十月", "十一月", "十二月"];
+
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+// --- Count tasks from all markdown files ---
+const allTasks = dv.pages().file.tasks;
+let dueToday = 0;
+let overdue = 0;
+
+for (const t of allTasks) {
+  if (t.completed) continue;
+  if (!t.due) continue;
+  const dueDate = new Date(t.due.year, t.due.month - 1, t.due.day);
+  dueDate.setHours(0, 0, 0, 0);
+  if (dueDate.getTime() === today.getTime()) {
+    dueToday++;
+  } else if (dueDate < today) {
+    overdue++;
+  }
+}
+
+// --- Count projects ---
+const projects = dv.pages().where(p => p.type === "project");
+const doingCount = projects.where(p => p.status === "Doing").length;
+const plannedCount = projects.where(p => p.status === "plan").length;
+const activeProjects = doingCount + plannedCount;
+
+// --- Render hero bar ---
+const hero = dv.el('div', '');
+hero.classList.add('hp-hero');
+
+const stats = [
+  {
+    icon: '📌',
+    value: dueToday,
+    label: '今日待办',
+    cssClass: 'card-doing',
+  },
+  {
+    icon: '⏳',
+    value: overdue,
+    label: '延期任务',
+    cssClass: 'card-overdue',
+  },
+  {
+    icon: '🚀',
+    value: activeProjects,
+    label: '活跃项目',
+    cssClass: 'card-projects',
+  },
+];
+
+let cardsHTML = '';
+for (const s of stats) {
+  cardsHTML += `
+    <div class="hp-stat-card ${s.cssClass}">
+      <div class="hp-stat-accent"></div>
+      <div class="hp-stat-body">
+        <div class="hp-stat-icon-circle">${s.icon}</div>
+        <div class="hp-stat-content">
+          <span class="hp-stat-value">${s.value}</span>
+          <span class="hp-stat-label">${s.label}</span>
+        </div>
+      </div>
+      <div class="hp-stat-glow"></div>
+    </div>`;
+}
+hero.innerHTML = cardsHTML;
+```
+
 ## 🗓️ 任务看板 
 
 >[!multi-column]
@@ -362,27 +540,6 @@ setTimeout(() => {
 >> ```
 
 ---
-## 🏅 任务复盘 (To-Do List)
-
-> [!multi-column]
->
->> [!success] 🌟 本周完成任务
->> ```tasks
->> done this week
->> hide due date
->> hide backlink
->> hide task count
->> ```
->
->> [!info] 🏆 本月完成任务
->> ```tasks
->> done this month
->> hide due date
->> hide backlink
->> hide task count
->> ```
-
----
 ## 🦺 DDL
 
 > [!multi-column]
@@ -404,6 +561,27 @@ setTimeout(() => {
 >> no scheduled date
 >> sort by priority
 >> hide backlink
+>> ```
+
+---
+## 🏅 任务复盘
+
+> [!multi-column]
+>
+>> [!success] 🌟 本周完成任务
+>> ```tasks
+>> done this week
+>> hide due date
+>> hide backlink
+>> hide task count
+>> ```
+>
+>> [!info] 🏆 本月完成任务
+>> ```tasks
+>> done this month
+>> hide due date
+>> hide backlink
+>> hide task count
 >> ```
 
 ---
