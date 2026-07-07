@@ -31,6 +31,7 @@ while ((opt = getopt(argc, argv, "hvs:E:b:t:")) != -1) {
 	case 's':
 		s = atoi(optarg);
 		break;
+
 	...
 	}
 }
